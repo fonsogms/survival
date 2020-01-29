@@ -1,7 +1,7 @@
 class Player {
   constructor() {
     this.x = 0;
-    this.y = 0;
+    this.y = 700;
     this.direction = "S";
     this.fireBalls = [];
   }

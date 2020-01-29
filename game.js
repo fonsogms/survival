@@ -49,10 +49,9 @@ class Game {
       });
     });
     console.log("setup");
-    console.log(this.coordinates);
   }
   checkCoordinates(obj) {
-    for (let elem of this.coordinates) {
+    for (let elem of game.coordinates) {
       if (obj.x === elem.x && obj.y === elem.y) {
         if (elem.occupied) {
           return true;
@@ -62,6 +61,10 @@ class Game {
       }
     }
   }
+  checkDistance(obj, obj2) {
+    let distance = Math.abs(obj.x - obj2.x) + Math.abs(obj.y - obj2.y);
+    return distance;
+  }
   draw() {
     // draw obstacles
     this.obstacles.forEach(elem => {
@@ -70,6 +73,5 @@ class Game {
 
     this.player.draw();
     this.zombie.draw();
-    console.log("hello");
   }
 }
