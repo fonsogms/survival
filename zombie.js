@@ -64,8 +64,7 @@ class Zombie {
         pathCost: origin.pathCost + 100
       };
       let possibleSteps = [path1, path2, path3, path4];
-      possibleSteps.forEach(step => {
-        //console.log(step, cheapestPath);
+      for (let step of possibleSteps) {
         if (step.pathCost < cheapestPath) {
           if (
             !game.checkCoordinates(step) &&
@@ -80,21 +79,24 @@ class Zombie {
 
               return step.pathCost;
             } else {
-              console.log("new loop");
+              // console.log("new loop");
               step.pathCost = findPathcost(step, game.player);
 
               return step.pathCost;
             }
           } else {
-            console.log("not a possible step");
+            // console.log("not a possible step");
             return step.pathCost;
           }
         } else {
-          console.log("very pricy path", step);
+          //console.log("very pricy path", step);
           return step.pathCost;
         }
+      }
+      possibleSteps.forEach(step => {
+        //console.log(step, cheapestPath);
       });
-      return cheapestPath;
+      /* return origin.pathCost; */
     }
 
     console.log("final cost", findPathcost(path2, game.player));
