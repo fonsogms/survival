@@ -37,9 +37,10 @@ class Zombie {
     }
   }
   getCloser(obj) {
-    if (this.path.length > 10) {
+    if (this.path.length > 20) {
+      console.log(this.path);
       this.path = [];
-      console.log(this.path.length);
+      // console.log(this.path.length);
     }
     let path1 = {
       x: this.x + 100,
@@ -70,7 +71,7 @@ class Zombie {
     let possibleSteps = [path1, path2, path3, path4];
 
     for (let elem of possibleSteps) {
-      console.log(elem);
+      // console.log(elem);
       if (
         this.path.find(step => {
           if (elem.x === step.x && elem.y === step.y) {
@@ -103,10 +104,17 @@ class Zombie {
     /*   if (frameCount === 120) {
       this.bestStep(game.player);
     } */
-    if (frameCount % 120 === 0) {
+    if (frameCount % 20 === 0) {
       let newStep = this.getCloser(game.player);
-      this.x = newStep.x;
-      this.y = newStep.y;
+
+      if (Object.keys(newStep).length === 3) {
+        this.x = newStep.x;
+        this.y = newStep.y;
+        console.log("hola");
+      } else {
+        this.path = [];
+        console.log("adios");
+      }
     }
     fill("red");
     rect(500, 700, 100, 100);
