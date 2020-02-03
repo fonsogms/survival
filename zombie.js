@@ -37,6 +37,10 @@ class Zombie {
     }
   }
   getCloser(obj) {
+    if (this.path.length > 10) {
+      this.path = [];
+      console.log(this.path.length);
+    }
     let path1 = {
       x: this.x + 100,
       y: this.y
@@ -74,7 +78,6 @@ class Zombie {
           }
         })
       ) {
-        console.log("hello");
         continue;
       }
       if (
@@ -90,30 +93,9 @@ class Zombie {
         elem.distance = game.checkDistance(elem, game.player);
         bestOption = elem;
         this.path.push(elem);
-        // console.log(elem);
       }
     }
-    /*     possibleSteps.forEach(elem => {
-      
-      if (
-        !game.checkCoordinates(elem) &&
-        (elem.x < width || elem.x < 0) &&
-        (elem.y < height || elem.y > 0)
-      ) {
-        //console.log(game.checkDistance(elem, game.player));
-        console.log(
-          elem,
-          game.checkDistance(elem, game.player) < bestOption.distance
-        );
 
-        if (game.checkDistance(elem, game.player) < bestOption.distance) {
-          elem.distance = game.checkDistance(elem, game.player);
-          bestOption = elem;
-          this.path.push(elem);
-          // console.log(elem);
-        }
-      }
-    }); */
     return bestOption;
   }
 
