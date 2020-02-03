@@ -17,7 +17,9 @@ class Game {
       new Obstacle(100, 400),
       new Obstacle(500, 400),
       new Obstacle(500, 500),
-      new Obstacle(600, 500)
+      new Obstacle(600, 500),
+      new Obstacle(900, 500),
+      new Obstacle(700, 600)
     );
 
     this.zombie = new Zombie(600, 700);
