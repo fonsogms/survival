@@ -1,7 +1,7 @@
 class Player {
   constructor() {
-    this.x = 0;
-    this.y = 700;
+    this.x = 800;
+    this.y = 500;
     this.direction = "S";
     this.fireBalls = [];
   }
@@ -17,6 +17,7 @@ class Player {
   shoot() {
     this.fireBalls.push(new FireBall(this.x, this.y, this.direction));
   }
+
   draw() {
     image(this.image, this.x, this.y, 100, 100);
     this.fireBalls.forEach(elem => {
