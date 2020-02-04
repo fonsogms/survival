@@ -16,7 +16,6 @@ function draw() {
   //to show constantly the elements
 }
 function keyPressed() {
-  console.log(game.checkCoordinates(game.player));
   //move Left
   if (keyCode === 37) {
     game.player.image = game.player.soldierLeft;

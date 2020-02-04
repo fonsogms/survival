@@ -22,7 +22,7 @@ class Game {
       new Obstacle(700, 600)
     );
 
-    this.zombie = new Zombie(600, 700);
+    this.zombie = new Zombie(100, 500);
     this.player.preload();
     console.log(this.player);
     console.log("preload");

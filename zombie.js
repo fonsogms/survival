@@ -17,7 +17,7 @@ class Zombie {
     }
   }
   moveLeft() {
-    console.log(game.checkCoordinates(this));
+    // console.log(game.checkCoordinates(this));
 
     this.x -= 100;
     if (game.checkCoordinates(this)) {
@@ -36,41 +36,44 @@ class Zombie {
       this.y -= 100;
     }
   }
-  getCloser(obj) {
-    if (this.path.length > 10) {
-      console.log(this.path);
-      this.path = [];
-    }
+  getCloser(origin, target) {
     let path1 = {
-      x: this.x + 100,
-      y: this.y
+      x: origin.x + 100,
+      y: origin.y,
+      path: [...origin.path, { x: origin.x + 100, y: origin.y }]
     };
     let path2 = {
-      x: this.x - 100,
-      y: this.y
+      x: origin.x - 100,
+      y: origin.y,
+      path: [...origin.path, { x: origin.x - 100, y: origin.y }]
     };
     let path3 = {
-      x: this.x,
-      y: this.y + 100
+      x: origin.x,
+      y: origin.y + 100,
+      path: [...origin.path, { x: origin.x, y: origin.y + 100 }]
     };
 
     let path4 = {
-      x: this.x,
-      y: this.y - 100
+      x: origin.x,
+      y: origin.y - 100,
+      path: [...origin.path, { x: origin.x, y: origin.y - 100 }]
     };
-    let bestOption = { distance: 2000 };
+    let bestOption = { distance: 4000 };
     let possibleSteps = [path1, path2, path3, path4];
 
     for (let elem of possibleSteps) {
       if (
-        this.path.find(pastStep => {
+        origin.path.find(pastStep => {
           if (elem.x === pastStep.x && elem.y === pastStep.y) {
             return true;
           }
         })
       ) {
+        //  console.log("already been there", elem.path);
+
         continue;
       }
+
       if (
         game.checkCoordinates(elem) ||
         elem.x >= width ||
@@ -78,55 +81,142 @@ class Zombie {
         elem.y >= height ||
         elem.y < 0
       ) {
+        //  console.log("not a possible step");
         continue;
       }
-      if (game.checkDistance(elem, game.player) < bestOption.distance) {
-        elem.distance = game.checkDistance(elem, game.player);
+      if (game.checkDistance(elem, target) < bestOption.distance) {
+        // console.log("possible step");
+        elem.distance = game.checkDistance(elem, target);
         bestOption = elem;
-        this.path.push(elem);
+      } else if (game.checkDistance(elem, target) === bestOption.distance) {
       }
     }
-
+    console.log(bestOption);
     return bestOption;
   }
-  findPath(target) {
+  pathFinder(player) {
     let path1 = {
       x: this.x + 100,
       y: this.y,
-      path: []
+      path: [{ x: this.x + 100, y: this.y }]
     };
     let path2 = {
       x: this.x - 100,
       y: this.y,
-      path: []
+      path: [{ x: this.x - 100, y: this.y }]
     };
     let path3 = {
       x: this.x,
       y: this.y + 100,
-      path: []
+      path: [{ x: this.x, y: this.y + 100 }]
     };
 
     let path4 = {
       x: this.x,
       y: this.y - 100,
-      path: []
+      path: [{ x: this.x, y: this.y - 100 }]
     };
-    let possibleSteps = [path1, path2, path3, path4];
-    for (let step of possibleSteps) {
+    let possiblePaths = [path1, path2, path3, path4];
+    const findPath = (origin, target) => {
+      if (origin.x === target.x && origin.y === target.y) {
+        //  console.log("target found");
+        return origin;
+      } else {
+        let nextStep = this.getCloser(origin, target);
+        if (Object.keys(nextStep).length >= 3) {
+          //  console.log("starting new loop");
+
+          let foundPath = findPath(nextStep, target);
+          console.log("this is one path", foundPath);
+
+          return foundPath;
+        }
+      }
+
+      //me devuelve cual es el paso mas cercano con registro del path
+    };
+    let shortestPath = {
+      path: [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        11,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        11,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    };
+
+    for (let path of possiblePaths) {
+      console.log(path);
+      let bestPossiblePath = findPath(path, player);
+      //console.log(bestPossiblePath);
+
+      if (!bestPossiblePath) {
+        continue;
+      }
+
+      if (bestPossiblePath.path.length < shortestPath.path.length) {
+        shortestPath = path;
+      }
+    }
+    if (shortestPath.x) {
+      return shortestPath;
+    } else {
+      return this.getCloser(this, player);
     }
   }
 
   draw() {
-    if (frameCount % 20 === 0) {
-      let newStep = this.getCloser(game.player);
+    if (frameCount % 120 === 0) {
+      let nextStep = this.pathFinder(game.player);
+      this.x = nextStep.x;
+      this.y = nextStep.y;
+    }
 
-      if (Object.keys(newStep).length === 3) {
+    /*     if (frameCount % 20 === 0) {
+      let newStep = this.getCloser(this, game.player);
+      console.log(newStep);
+      if (Object.keys(newStep).length >= 3) {
         this.x = newStep.x;
         this.y = newStep.y;
       } else {
         this.path = [];
       }
-    }
+    } */
 
     image(this.img, this.x, this.y, 100, 100);
   }
