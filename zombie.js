@@ -88,10 +88,16 @@ class Zombie {
         // console.log("possible step");
         elem.distance = game.checkDistance(elem, target);
         bestOption = elem;
-      } else if (game.checkDistance(elem, target) === bestOption.distance) {
-      }
+      } /* else if (game.checkDistance(elem, target) === bestOption.distance) {
+        let currentStep = getCloser(elem, target);
+        let currentBestOption = getCloser(bestOption, target);
+        if (currentStep && currentBestOption) {
+          if (currentStep.distance < currentBestOption.distance) {
+            bestOption = elem;
+          }
+        }
+      } */
     }
-    console.log(bestOption);
     return bestOption;
   }
   pathFinder(player) {
@@ -181,7 +187,6 @@ class Zombie {
     };
 
     for (let path of possiblePaths) {
-      console.log(path);
       let bestPossiblePath = findPath(path, player);
       //console.log(bestPossiblePath);
 
@@ -200,11 +205,115 @@ class Zombie {
     }
   }
 
+  checkNeighbours(node, visitedNodes, pathStack) {
+    let path1 = {
+      x: node.x + 100,
+      y: node.y
+    };
+    let path2 = {
+      x: node.x - 100,
+      y: node.y
+    };
+    let path3 = {
+      x: node.x,
+      y: node.y + 100
+    };
+
+    let path4 = {
+      x: node.x,
+      y: node.y - 100
+    };
+    let unvisited = 0;
+    let possiblePaths = [path1, path2, path3, path4];
+    for (let elem of possiblePaths) {
+      if (
+        game.checkCoordinates(elem) ||
+        elem.x >= width ||
+        elem.x < 0 ||
+        elem.y >= height ||
+        elem.y < 0
+      ) {
+        continue;
+      }
+      if (
+        !visitedNodes.find(visitedNode => {
+          if (elem.x === visitedNode.x && elem.y === visitedNode.y) {
+            return true;
+          }
+        })
+      ) {
+        pathStack.push(elem);
+        unvisited += 1;
+      }
+    }
+    if (unvisited === 0) {
+      pathStack.pop();
+    }
+  }
+  pathTest(origin, target) {
+    let pathStack = [{ x: origin.x, y: this.y, visited: false }];
+    let visitedNodes = [];
+    while (true) {
+      let currentStep = pathStack[pathStack.length - 1];
+      currentStep.visitied = true;
+      visitedNodes.push(currentStep);
+
+      if (currentStep.x === target.x && currentStep.y === target.y) {
+        return pathStack;
+        break;
+      }
+      this.checkNeighbours(currentStep, visitedNodes, pathStack);
+    }
+  }
   draw() {
-    if (frameCount % 120 === 0) {
-      let nextStep = this.pathFinder(game.player);
-      this.x = nextStep.x;
-      this.y = nextStep.y;
+    if (frameCount === 120) {
+      this.i = -1;
+      this.path = this.pathTest(this, game.player);
+
+      // path.forEach(elem => {
+      //   fill("blue");
+      //   rect(elem.x, elem.y, 100, 100);
+      //   text()
+      // });
+      // let nextStep = this.pathFinder(game.player);
+      // this.x = nextStep.x;
+      // this.y = nextStep.y;
+      // noLoop();
+    }
+    if (frameCount === 121) {
+      let path1 = {
+        x: this.x + 100,
+        y: this.y,
+        path: [{ x: this.x + 100, y: this.y }]
+      };
+      let path2 = {
+        x: this.x - 100,
+        y: this.y,
+        path: [{ x: this.x - 100, y: this.y }]
+      };
+      let path3 = {
+        x: this.x,
+        y: this.y + 100,
+        path: [{ x: this.x, y: this.y + 100 }]
+      };
+
+      let path4 = {
+        x: this.x,
+        y: this.y - 100,
+        path: [{ x: this.x, y: this.y - 100 }]
+      };
+      let bestOption = {};
+      let possibleSteps = [path1, path2, path3, path4];
+      possibleSteps.forEach(elem => {
+        let nextStep = this.pathTest(elem, game.player);
+        console.log(nextStep);
+
+        if (nextStep.length < 200 || nextStep.length < bestOption.length) {
+          bestOption = elem;
+        }
+      });
+      this.x = bestOption.x;
+      this.y = bestOption.y;
     }
 
     /*     if (frameCount % 20 === 0) {
