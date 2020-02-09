@@ -10,32 +10,6 @@ class Zombie {
     this.path = [{ x: 10000000, y: 101321323 }];
   }
 
-  moveRight() {
-    this.x += 100;
-    if (game.checkCoordinates(this)) {
-      this.x -= 100;
-    }
-  }
-  moveLeft() {
-    // console.log(game.checkCoordinates(this));
-
-    this.x -= 100;
-    if (game.checkCoordinates(this)) {
-      this.x += 100;
-    }
-  }
-  moveUp() {
-    this.y -= 100;
-    if (game.checkCoordinates(this)) {
-      this.y += 100;
-    }
-  }
-  moveDown() {
-    this.y += 100;
-    if (game.checkCoordinates(this)) {
-      this.y -= 100;
-    }
-  }
   getCloser(origin, target) {
     let path1 = {
       x: origin.x + 100,
@@ -205,7 +179,7 @@ class Zombie {
     }
   }
 
-  checkNeighbours(node, visitedNodes, pathStack) {
+  checkNeighbours(node, visitedNodes, pathStack, target) {
     let path1 = {
       x: node.x + 100,
       y: node.y
@@ -225,6 +199,13 @@ class Zombie {
     };
     let unvisited = 0;
     let possiblePaths = [path1, path2, path3, path4];
+    possiblePaths.forEach(elem => {
+      elem.distance = game.checkDistance(elem, target);
+    });
+    possiblePaths.sort((a, b) => {
+      return b.distance - a.distance;
+    });
+    console.log(possiblePaths);
     for (let elem of possiblePaths) {
       if (
         game.checkCoordinates(elem) ||
@@ -235,6 +216,7 @@ class Zombie {
       ) {
         continue;
       }
+
       if (
         !visitedNodes.find(visitedNode => {
           if (elem.x === visitedNode.x && elem.y === visitedNode.y) {
@@ -253,34 +235,40 @@ class Zombie {
   pathTest(origin, target) {
     let pathStack = [{ x: origin.x, y: this.y, visited: false }];
     let visitedNodes = [];
+    let path = [];
     while (true) {
       let currentStep = pathStack[pathStack.length - 1];
+      path.push(currentStep);
       currentStep.visitied = true;
       visitedNodes.push(currentStep);
 
       if (currentStep.x === target.x && currentStep.y === target.y) {
-        return pathStack;
+        return path;
         break;
       }
-      this.checkNeighbours(currentStep, visitedNodes, pathStack);
+      this.checkNeighbours(currentStep, visitedNodes, pathStack, target);
     }
   }
   draw() {
-    if (frameCount === 120) {
+    if (frameCount === 29) {
       this.i = -1;
       this.path = this.pathTest(this, game.player);
 
-      // path.forEach(elem => {
+      // this.path.forEach(elem => {
       //   fill("blue");
       //   rect(elem.x, elem.y, 100, 100);
-      //   text()
+      //   text();
       // });
       // let nextStep = this.pathFinder(game.player);
       // this.x = nextStep.x;
       // this.y = nextStep.y;
       // noLoop();
     }
-    if (frameCount === 121) {
+    if (frameCount % 30 === 0) {
+      this.i++;
+      (this.x = this.path[this.i].x), (this.y = this.path[this.i].y);
+    }
+    /*  if (frameCount === 121) {
       let path1 = {
         x: this.x + 100,
         y: this.y,
@@ -315,7 +303,7 @@ class Zombie {
       this.x = bestOption.x;
       this.y = bestOption.y;
     }
-
+ */
     /*     if (frameCount % 20 === 0) {
       let newStep = this.getCloser(this, game.player);
       console.log(newStep);
