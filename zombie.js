@@ -253,16 +253,6 @@ class Zombie {
     if (frameCount === 29) {
       this.i = -1;
       this.path = this.pathTest(this, game.player);
-
-      // this.path.forEach(elem => {
-      //   fill("blue");
-      //   rect(elem.x, elem.y, 100, 100);
-      //   text();
-      // });
-      // let nextStep = this.pathFinder(game.player);
-      // this.x = nextStep.x;
-      // this.y = nextStep.y;
-      // noLoop();
     }
     if (frameCount % 30 === 0) {
       this.i++;
