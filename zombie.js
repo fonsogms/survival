@@ -7,7 +7,7 @@ class Zombie {
     this.health = 100;
     this.img = game.zombieImg;
     this.direction = "N";
-    this.path = [{ x: 10000000, y: 101321323 }];
+    this.path = [];
   }
 
   getCloser(origin, target) {
@@ -205,7 +205,7 @@ class Zombie {
     possiblePaths.sort((a, b) => {
       return b.distance - a.distance;
     });
-    console.log(possiblePaths);
+    // console.log(possiblePaths);
     for (let elem of possiblePaths) {
       if (
         game.checkCoordinates(elem) ||
@@ -250,15 +250,23 @@ class Zombie {
     }
   }
   draw() {
-    if (frameCount === 29) {
-      this.i = -1;
-      this.path = this.pathTest(this, game.player);
+    if (frameCount % 120 === 0) {
+      let possibleSteps = [];
+      for (let i = 100; i >= -100; i -= 200) {
+        possibleSteps.push({ x: this.x + i, y: this.y });
+      }
+      for (let j = 100; j >= -100; j -= 200) {
+        possibleSteps.push({ x: this.x, y: this.y + j });
+      }
+
+      //console.log(possibleSteps);
+      this.nextStep = this.pathTest(this, game.player);
+      console.log(this.nextStep);
+      // console.log(this.x, this.y);
+      //console.log(this.path);
     }
-    if (frameCount % 30 === 0) {
-      this.i++;
-      (this.x = this.path[this.i].x), (this.y = this.path[this.i].y);
-    }
-    /*  if (frameCount === 121) {
+
+    /*    if (frameCount === 121) {
       let path1 = {
         x: this.x + 100,
         y: this.y,
