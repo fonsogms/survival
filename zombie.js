@@ -228,30 +228,31 @@ class Zombie {
         unvisited += 1;
       }
     }
-    if (unvisited === 0) {
+    /*  if (unvisited === 0) {
       pathStack.pop();
-    }
+    } */
   }
   pathTest(origin, target) {
     let pathStack = [{ x: origin.x, y: this.y, visited: false }];
     let visitedNodes = [];
     let path = [];
     while (true) {
-      let currentStep = pathStack[pathStack.length - 1];
+      let currentStep = pathStack.shift();
       path.push(currentStep);
       currentStep.visitied = true;
       visitedNodes.push(currentStep);
 
       if (currentStep.x === target.x && currentStep.y === target.y) {
-        return path;
+        return pathStack;
         break;
       }
       this.checkNeighbours(currentStep, visitedNodes, pathStack, target);
     }
   }
   draw() {
-    if (frameCount % 120 === 0) {
+    if (frameCount === 30) {
       let possibleSteps = [];
+      this.i = 0;
       for (let i = 100; i >= -100; i -= 200) {
         possibleSteps.push({ x: this.x + i, y: this.y });
       }
@@ -265,54 +266,11 @@ class Zombie {
       // console.log(this.x, this.y);
       //console.log(this.path);
     }
-
-    /*    if (frameCount === 121) {
-      let path1 = {
-        x: this.x + 100,
-        y: this.y,
-        path: [{ x: this.x + 100, y: this.y }]
-      };
-      let path2 = {
-        x: this.x - 100,
-        y: this.y,
-        path: [{ x: this.x - 100, y: this.y }]
-      };
-      let path3 = {
-        x: this.x,
-        y: this.y + 100,
-        path: [{ x: this.x, y: this.y + 100 }]
-      };
-
-      let path4 = {
-        x: this.x,
-        y: this.y - 100,
-        path: [{ x: this.x, y: this.y - 100 }]
-      };
-      let bestOption = {};
-      let possibleSteps = [path1, path2, path3, path4];
-      possibleSteps.forEach(elem => {
-        let nextStep = this.pathTest(elem, game.player);
-        console.log(nextStep);
-
-        if (nextStep.length < 200 || nextStep.length < bestOption.length) {
-          bestOption = elem;
-        }
-      });
-      this.x = bestOption.x;
-      this.y = bestOption.y;
+    if (frameCount % 100 === 0) {
+      this.i++;
+      this.x = this.nextStep[this.i].x;
+      this.y = this.nextStep[this.i].y;
     }
- */
-    /*     if (frameCount % 20 === 0) {
-      let newStep = this.getCloser(this, game.player);
-      console.log(newStep);
-      if (Object.keys(newStep).length >= 3) {
-        this.x = newStep.x;
-        this.y = newStep.y;
-      } else {
-        this.path = [];
-      }
-    } */
-
     image(this.img, this.x, this.y, 100, 100);
   }
 }
