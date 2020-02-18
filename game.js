@@ -40,7 +40,14 @@ class Game {
       //grid creation
 
       for (let j = 0; j <= height; j += 100) {
-        this.coordinates.push({ x: i, y: j, occupied: false });
+        this.coordinates.push({
+          x: i,
+          y: j,
+          occupied: false,
+          f: 0,
+          g: 0,
+          h: 0
+        });
       }
     }
     //checking occupied obstacles
@@ -68,8 +75,42 @@ class Game {
     let distance = Math.abs(obj.x - obj2.x) + Math.abs(obj.y - obj2.y);
     return distance;
   }
+  removeFromArray(arr, elem) {
+    for (var i = arr.length - 1; i >= 0; i--) {
+      if (arr[i] == elem) {
+        arr.splice(i, 1);
+      }
+    }
+  }
+  getNeighbors(step) {
+    let possibleSteps = [];
+    for (let i = 100; i >= -100; i -= 200) {
+      let coordinate = { x: step.x + i, y: step.y };
+      if (
+        this.checkCoordinates(coordinate) ||
+        coordinate.x >= width ||
+        coordinate.x < 0
+      ) {
+        continue;
+      }
+      possibleSteps.push(coordinate);
+    }
+    for (let j = 100; j >= -100; j -= 200) {
+      let coordinate = { x: step.x, y: step.y + j };
+      if (
+        this.checkCoordinates(coordinate) ||
+        coordinate.y >= height ||
+        coordinate.y < 0
+      ) {
+        continue;
+      }
+      possibleSteps.push(coordinate);
+    }
+    return possibleSteps;
+  }
   draw() {
     // draw obstacles
+
     this.obstacles.forEach(elem => {
       elem.draw();
     });
