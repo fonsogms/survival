@@ -15,43 +15,47 @@ function draw() {
   game.draw();
   //to show constantly the elements
 }
-function keyPressed() {
-  //move Left
+
+function playerMovement(player) {
   if (keyCode === 37) {
-    game.player.image = game.player.soldierLeft;
-    game.player.x -= 100;
-    game.player.direction = "W";
-    if (game.player.x < 0 || game.checkCoordinates(game.player)) {
-      game.player.x += 100;
+    player.image = player.soldierLeft;
+    player.x -= 100;
+    player.direction = "W";
+    if (player.x < 0 || game.checkCoordinates(player)) {
+      player.x += 100;
     }
   }
   // move Right
   else if (keyCode === 39) {
-    game.player.image = game.player.soldierRight;
-    game.player.x += 100;
-    game.player.direction = "E";
-    if (game.player.x >= width || game.checkCoordinates(game.player)) {
-      game.player.x -= 100;
+    player.image = player.soldierRight;
+    player.x += 100;
+    player.direction = "E";
+    if (player.x >= width || game.checkCoordinates(player)) {
+      player.x -= 100;
     }
   }
   //move Up
   else if (keyCode === 38) {
-    game.player.image = game.player.soldierUp;
-    game.player.y -= 100;
-    game.player.direction = "N";
-    if (game.player.y < 0 || game.checkCoordinates(game.player)) {
-      game.player.y += 100;
+    player.image = player.soldierUp;
+    player.y -= 100;
+    player.direction = "N";
+    if (player.y < 0 || game.checkCoordinates(player)) {
+      player.y += 100;
     }
   }
   // move Down
   else if (keyCode === 40) {
-    game.player.image = game.player.soldierDown;
-    game.player.y += 100;
-    game.player.direction = "S";
-    if (game.player.y >= height || game.checkCoordinates(game.player)) {
-      game.player.y -= 100;
+    player.image = player.soldierDown;
+    player.y += 100;
+    player.direction = "S";
+    if (player.y >= height || game.checkCoordinates(player)) {
+      player.y -= 100;
     }
   } else if (keyCode === 32) {
-    game.player.shoot();
+    player.shoot();
   }
+}
+function keyPressed() {
+  playerMovement(game.player);
+  //move Left
 }

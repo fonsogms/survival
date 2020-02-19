@@ -10,6 +10,7 @@ class Game {
       "assets/zombies/Screenshot_2020-01-27_at_11-removebg-preview.png"
     );
     this.player = new Player();
+
     this.obstacles.push(
       new Obstacle(100, 100),
       new Obstacle(100, 200),
@@ -94,6 +95,11 @@ class Game {
       ) {
         continue;
       }
+      for (let zombie of this.zombies) {
+        if (zombie.x === step.x && zombie.y === step.y) {
+          continue;
+        }
+      }
       possibleSteps.push(coordinate);
     }
     for (let j = 100; j >= -100; j -= 200) {
@@ -110,13 +116,16 @@ class Game {
     return possibleSteps;
   }
   checkCollision(a, b) {
-    return (
-      a.y + 100 < b.y || a.y > b.y + 100 || a.x + 100 < b.x || a.x > b.x + 100
-    );
+    return a.y + 80 < b.y || a.y > b.y + 80 || a.x + 80 < b.x || a.x > b.x + 80;
   }
   draw() {
     // draw obstacles
-
+    this.coordinates.forEach(elem => {
+      if (elem.occupied) {
+        fill("blue");
+        rect(elem.x, elem.y, 100, 100);
+      }
+    });
     this.player.draw();
 
     for (let fireBall of this.player.fireBalls) {
@@ -138,6 +147,7 @@ class Game {
     this.zombies.forEach(elem => {
       elem.draw();
     });
+
     this.obstacles.forEach(elem => {
       elem.draw();
     });
