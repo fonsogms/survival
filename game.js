@@ -2,6 +2,7 @@ class Game {
   constructor() {
     this.obstacles = [];
     this.coordinates = [];
+    this.zombies = [];
   }
   preload() {
     this.fireBallImage = loadImage("./assets/fireBall.png");
@@ -23,7 +24,7 @@ class Game {
       new Obstacle(100, 0)
     );
 
-    this.zombie = new Zombie(900, 900);
+    this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
     this.player.preload();
     console.log(this.player);
     console.log("preload");
@@ -108,14 +109,38 @@ class Game {
     }
     return possibleSteps;
   }
+  checkCollision(a, b) {
+    return (
+      a.y + 100 < b.y || a.y > b.y + 100 || a.x + 100 < b.x || a.x > b.x + 100
+    );
+  }
   draw() {
     // draw obstacles
 
+    this.player.draw();
+
+    for (let fireBall of this.player.fireBalls) {
+      if (this.checkCoordinates(fireBall)) {
+        this.removeFromArray(this.player.fireBalls, fireBall);
+      }
+      for (let zombie of this.zombies) {
+        if (!this.checkCollision(fireBall, zombie)) {
+          console.log("auch");
+          this.removeFromArray(this.player.fireBalls, fireBall);
+
+          zombie.health -= fireBall.damage;
+          if (zombie.health <= 0) {
+            this.removeFromArray(this.zombies, zombie);
+          }
+        }
+      }
+    }
+
+    this.zombies.forEach(elem => {
+      elem.draw();
+    });
     this.obstacles.forEach(elem => {
       elem.draw();
     });
-
-    this.player.draw();
-    this.zombie.draw();
   }
 }

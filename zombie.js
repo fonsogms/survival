@@ -12,9 +12,8 @@ class Zombie {
     this.g = 0;
     this.h = 0;
   }
-  setup() {}
 
-  checkNeighbours(node, vistedNode) {}
+  //function using A* algorithm to find the best path to get to the player
   aFinder(origin, target) {
     let openList = [origin];
     let closedList = [];
@@ -78,19 +77,16 @@ class Zombie {
     }
   }
   draw() {
-    if (frameCount === 30) {
-      //console.log(possibleSteps);
-      // this.nextStep = this.pathTest(this, game.player);
-      //console.log(this.nextStep);
-      // console.log(this.x, this.y);
-      //console.log(this.path);
+    if (frameCount % 20 === 0) {
+      //this is to make sure the zombie is only as close to one step to the player
+      if (game.checkDistance(this, game.player) > 100) {
+        this.path = this.aFinder(this, game.player);
+        this.x = this.path[1].x;
+        this.y = this.path[1].y;
+      }
     }
-    if (frameCount % 32 === 0) {
-      this.path = this.aFinder(this, game.player);
+    // if the zombie dies he has to dissappear
 
-      this.x = this.path[1].x;
-      this.y = this.path[1].y;
-    }
     image(this.img, this.x, this.y, 100, 100);
   }
 }
