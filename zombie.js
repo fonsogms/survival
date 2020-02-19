@@ -72,26 +72,33 @@ class Zombie {
       }
     }
   }
+  occupySpots(obj) {
+    game.coordinates.forEach(elem => {
+      if (elem.x === obj.x && elem.y === obj.y) {
+        elem.occupied = !elem.occupied;
+      }
+    });
+  }
   draw() {
-    if (frameCount % 20 === 0) {
+    if (frameCount % 19 === 0) {
       game.coordinates.forEach(elem => {
         if (elem.x === this.x && elem.y === this.y) {
-          elem.occupied = !elem.occupied;
+          elem.occupied = true;
         }
       });
+    }
+    if (frameCount % 20 === 0) {
+      this.occupySpots(this);
       //this is to make sure the zombie is only as close to one step to the player
       if (game.checkDistance(this, game.player) > 100) {
         this.path = this.aFinder(this, game.player);
-        this.x = this.path[1].x;
-        this.y = this.path[1].y;
-        game.coordinates.forEach(elem => {
-          if (elem.x === this.x && elem.y === this.y) {
-            elem.occupied = !elem.occupied;
-          }
-        });
+        if (this.path) {
+          this.x = this.path[1].x;
+          this.y = this.path[1].y;
+        }
       }
+      this.occupySpots(this);
     }
-    // if the zombie dies he has to dissappear
 
     image(this.img, this.x, this.y, 100, 100);
   }

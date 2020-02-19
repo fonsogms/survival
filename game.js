@@ -138,6 +138,7 @@ class Game {
 
           zombie.health -= fireBall.damage;
           if (zombie.health <= 0) {
+            zombie.occupySpots(zombie);
             this.removeFromArray(this.zombies, zombie);
           }
         }
