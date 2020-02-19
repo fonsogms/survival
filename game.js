@@ -125,7 +125,6 @@ class Game {
       }
       for (let zombie of this.zombies) {
         if (!this.checkCollision(fireBall, zombie)) {
-          console.log("auch");
           this.removeFromArray(this.player.fireBalls, fireBall);
 
           zombie.health -= fireBall.damage;

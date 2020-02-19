@@ -39,7 +39,7 @@ class Zombie {
       }
 
       game.removeFromArray(openList, current);
-      // closedList.push(current);
+      closedList.push(current);
       current.neighbors = game.getNeighbors(current);
       let neighbors = current.neighbors;
       for (let neighbor of neighbors) {
@@ -50,7 +50,6 @@ class Zombie {
             }
           })
         ) {
-          // console.log("Not closed");
           let tempG = current.g + 100;
           if (
             openList.find(openNode => {
@@ -59,9 +58,7 @@ class Zombie {
               }
             })
           ) {
-            console.log("in openset");
             if (tempG < neighbor.g) {
-              console.log("better G");
               neighbor.g = tempG;
             }
           } else {
@@ -71,7 +68,6 @@ class Zombie {
           neighbor.h = game.checkDistance(neighbor, target);
           neighbor.f = neighbor.g + neighbor.h;
           neighbor.previous = current;
-          //console.log(neighbor);
         }
       }
     }
