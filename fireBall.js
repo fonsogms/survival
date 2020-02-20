@@ -4,7 +4,7 @@ class FireBall {
     this.y = y;
     this.direction = direction;
     this.img = game.fireBallImage;
-    this.damage = 10;
+    this.damage = 20;
   }
   draw() {
     switch (this.direction) {

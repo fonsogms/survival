@@ -124,8 +124,30 @@ class Game {
   checkCollision(a, b) {
     return a.y + 80 < b.y || a.y > b.y + 80 || a.x + 80 < b.x || a.x > b.x + 80;
   }
+  uded() {
+    textSize(70);
+    text("U DED", 400, 400);
+    fill(0, 102, 153);
+    text("Bruh", 400, 500);
+  }
+  zombiesEating() {
+    if (frameCount % 60 === 0) {
+      for (let zombie of this.zombies) {
+        console.log(this.checkDistance(zombie, this.player));
+        if (this.checkDistance(zombie, this.player) <= 100) {
+          console.log("eating");
+          this.player.health -= 50;
+          if (this.player.health <= 0) {
+            this.uded();
+            noLoop();
+          }
+        }
+      }
+    }
+  }
   draw() {
     // draw obstacles
+
     this.coordinates.forEach(elem => {
       if (elem.occupied) {
         fill("blue");
@@ -165,5 +187,6 @@ class Game {
     this.obstacles.forEach(elem => {
       elem.draw();
     });
+    this.zombiesEating();
   }
 }
