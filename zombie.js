@@ -79,8 +79,32 @@ class Zombie {
       }
     });
   }
+  zombieMovement() {
+    this.occupySpots(this);
+    //this is to make sure the zombie is only as close to one step to the player
+    if (game.checkDistance(this, game.player) > 100) {
+      this.path = this.aFinder(this, game.player);
+      if (this.path) {
+        this.x = this.path[1].x;
+        this.y = this.path[1].y;
+      } else {
+        let possibleSteps = game.getNeighbors(this);
+        let nextStep = { distance: Infinity };
+        for (let possibleStep of possibleSteps) {
+          possibleStep.distance = game.checkDistance(possibleStep, game.player);
+          if (possibleStep.distance < nextStep.distance) {
+            nextStep = possibleStep;
+          }
+        }
+        this.x = nextStep.x;
+        this.y = nextStep.y;
+      }
+    }
+    this.occupySpots(this);
+  }
   draw() {
-    if (frameCount % 19 === 0) {
+    // first is to make sure that we are occupying the first spot
+    if (frameCount % 20 === 0) {
       game.coordinates.forEach(elem => {
         if (elem.x === this.x && elem.y === this.y) {
           elem.occupied = true;
@@ -88,31 +112,7 @@ class Zombie {
       });
     }
     if (frameCount % 20 === 0) {
-      this.occupySpots(this);
-      //this is to make sure the zombie is only as close to one step to the player
-      if (game.checkDistance(this, game.player) > 100) {
-        this.path = this.aFinder(this, game.player);
-        if (this.path) {
-          this.x = this.path[1].x;
-          this.y = this.path[1].y;
-        } else {
-          let possibleSteps = game.getNeighbors(this);
-          console.log(possibleSteps);
-          let nextStep = { distance: Infinity };
-          for (let possibleStep of possibleSteps) {
-            possibleStep.distance = game.checkDistance(
-              possibleStep,
-              game.player
-            );
-            if (possibleStep.distance < nextStep.distance) {
-              nextStep = possibleStep;
-            }
-          }
-          this.x = nextStep.x;
-          this.y = nextStep.y;
-        }
-      }
-      this.occupySpots(this);
+      this.zombieMovement();
     }
 
     image(this.img, this.x, this.y, 100, 100);

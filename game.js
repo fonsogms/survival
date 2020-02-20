@@ -3,6 +3,12 @@ class Game {
     this.obstacles = [];
     this.coordinates = [];
     this.zombies = [];
+    this.entrances = [
+      { x: 0, y: 0 },
+      { x: 900, y: 900 },
+      { x: 0, y: 900 },
+      { x: 900, y: 0 }
+    ];
   }
   preload() {
     this.fireBallImage = loadImage("./assets/fireBall.png");
@@ -25,7 +31,7 @@ class Game {
       new Obstacle(100, 0)
     );
 
-    this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
+    //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
     this.player.preload();
     console.log(this.player);
     console.log("preload");
@@ -127,7 +133,14 @@ class Game {
       }
     });
     this.player.draw();
-
+    //Create random zombies in especified places
+    if (frameCount % 300 === 0) {
+      let random = Math.floor(Math.random() * this.entrances.length);
+      console.log(random);
+      let randomEntance = this.entrances[random];
+      this.zombies.push(new Zombie(...Object.values(randomEntance)));
+    }
+    //manage zombies death and fireballs disappearance
     for (let fireBall of this.player.fireBalls) {
       if (this.checkCoordinates(fireBall)) {
         this.removeFromArray(this.player.fireBalls, fireBall);
