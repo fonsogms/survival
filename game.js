@@ -9,6 +9,7 @@ class Game {
       { x: 0, y: 900 },
       { x: 900, y: 0 }
     ];
+    this.deathsCounter = 0;
   }
   preload() {
     this.fireBallImage = loadImage("./assets/fireBall.png");
@@ -130,12 +131,15 @@ class Game {
     fill(0, 102, 153);
     text("Bruh", 400, 500);
   }
+  createZombie() {
+    let random = Math.floor(Math.random() * this.entrances.length);
+    let randomEntance = this.entrances[random];
+    this.zombies.push(new Zombie(...Object.values(randomEntance)));
+  }
   zombiesEating() {
     if (frameCount % 60 === 0) {
       for (let zombie of this.zombies) {
-        console.log(this.checkDistance(zombie, this.player));
         if (this.checkDistance(zombie, this.player) <= 100) {
-          console.log("eating");
           this.player.health -= 50;
           if (this.player.health <= 0) {
             this.uded();
@@ -156,12 +160,46 @@ class Game {
     });
     this.player.draw();
     //Create random zombies in especified places
-    if (frameCount % 300 === 0) {
-      let random = Math.floor(Math.random() * this.entrances.length);
-      console.log(random);
-      let randomEntance = this.entrances[random];
-      this.zombies.push(new Zombie(...Object.values(randomEntance)));
+    if (this.deathsCounter < 5) {
+      if (frameCount % 300 === 0) {
+        this.createZombie();
+      }
+    } else if (this.deathsCounter < 10) {
+      if (frameCount % 200 === 0) {
+        this.createZombie();
+      }
+    } else if (this.deathsCounter < 15) {
+      if (frameCount % 200 === 0) {
+        this.createZombie();
+        this.createZombie();
+      }
+    } else if (this.deathsCounter < 20) {
+      if (frameCount % 160 === 0) {
+        this.createZombie();
+        this.createZombie();
+      }
+    } else if (this.deathsCounter < 30) {
+      if (frameCount % 160 === 0) {
+        this.createZombie();
+        this.createZombie();
+        this.createZombie();
+      }
+    } else if (this.deathsCounter < 40) {
+      if (frameCount % 160 === 0) {
+        this.createZombie();
+        this.createZombie();
+        this.createZombie();
+        this.createZombie();
+      }
+    } else {
+      if (frameCount % 130 === 0) {
+        this.createZombie();
+        this.createZombie();
+        this.createZombie();
+        this.createZombie();
+      }
     }
+
     //manage zombies death and fireballs disappearance
     for (let fireBall of this.player.fireBalls) {
       if (this.checkCoordinates(fireBall)) {
@@ -175,6 +213,7 @@ class Game {
           if (zombie.health <= 0) {
             zombie.occupySpots(zombie);
             this.removeFromArray(this.zombies, zombie);
+            this.deathsCounter++;
           }
         }
       }
