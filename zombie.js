@@ -79,12 +79,30 @@ class Zombie {
       }
     });
   }
+
+  //check the direction of the zombie to add images according to its direction
+  checkDirection(previousPos, newPos) {
+    if (newPos.x < previousPos.x) {
+      this.direction = "W";
+    }
+    if (newPos.x > previousPos.x) {
+      this.direction = "E";
+    }
+    if (newPos.y < previousPos.y) {
+      this.direction = "N";
+    }
+    if (newPos.y > previousPos.y) {
+      this.direction = "S";
+    }
+  }
   zombieMovement() {
     this.occupySpots(this);
     //this is to make sure the zombie is only as close to one step to the player
     if (game.checkDistance(this, game.player) > 100) {
       this.path = this.aFinder(this, game.player);
       if (this.path) {
+        this.checkDirection(this, this.path[1]);
+        console.log(this.direction);
         this.x = this.path[1].x;
         this.y = this.path[1].y;
       } else {

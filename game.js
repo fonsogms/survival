@@ -178,13 +178,13 @@ class Game {
         this.createZombie(Zombie);
         this.createZombie(Zombie);
       }
-    } else if (this.deathsCounter < 50) {
+    } else if (this.deathsCounter < 60) {
       if (frameCount % 160 === 0) {
         this.createZombie(Zombie);
         this.createZombie(Zombie);
         this.createZombie(Zombie);
       }
-    } else if (this.deathsCounter < 70) {
+    } else if (this.deathsCounter < 120) {
       if (frameCount % 160 === 0) {
         this.createZombie(Zombie);
         this.createZombie(Zombie);
