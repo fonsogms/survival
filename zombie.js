@@ -5,14 +5,14 @@ class Zombie {
     this.x = x;
     this.y = y;
     this.health = 100;
-    this.img = game.zombieImg;
+    this.imgs = game.zombieImgs;
+    this.img;
     this.direction = "N";
     this.path = [];
     this.f = 0;
     this.g = 0;
     this.h = 0;
   }
-
   //function using A* algorithm to find the best path to get to the player
   aFinder(origin, target) {
     let openList = [origin];
@@ -81,27 +81,51 @@ class Zombie {
   }
 
   //check the direction of the zombie to add images according to its direction
-  checkDirection(previousPos, newPos) {
+  checkDirection(previousPos, newPos, target) {
     if (newPos.x < previousPos.x) {
       this.direction = "W";
+      this.img = this.imgs.W[0];
     }
     if (newPos.x > previousPos.x) {
       this.direction = "E";
+      this.img = this.imgs.E[0];
     }
     if (newPos.y < previousPos.y) {
       this.direction = "N";
+      this.img = this.imgs.N[0];
     }
     if (newPos.y > previousPos.y) {
       this.direction = "S";
+      this.img = this.imgs.S[0];
+    }
+  }
+  lookAtPlayer(target) {
+    if (this.x > target.x) {
+      this.direction = "W";
+      this.img = this.imgs.W[0];
+    }
+    if (this.x < target.x) {
+      this.direction = "E";
+      this.img = this.imgs.E[0];
+    }
+    if (this.y > target.y) {
+      this.direction = "N";
+      this.img = this.imgs.N[0];
+    }
+    if (this.y < target.y) {
+      this.direction = "S";
+      this.img = this.imgs.S[0];
     }
   }
   zombieMovement() {
     this.occupySpots(this);
     //this is to make sure the zombie is only as close to one step to the player
+    this.lookAtPlayer(game.player);
+
     if (game.checkDistance(this, game.player) > 100) {
       this.path = this.aFinder(this, game.player);
       if (this.path) {
-        this.checkDirection(this, this.path[1]);
+        this.checkDirection(this, this.path[1], game.player);
         console.log(this.direction);
         this.x = this.path[1].x;
         this.y = this.path[1].y;
@@ -113,6 +137,7 @@ class Zombie {
           if (possibleStep.distance < nextStep.distance) {
             nextStep = possibleStep;
           }
+          this.lookAtPlayer(game.player);
         }
         this.x = nextStep.x;
         this.y = nextStep.y;

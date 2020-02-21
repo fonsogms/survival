@@ -12,10 +12,16 @@ class Game {
     this.deathsCounter = 0;
   }
   preload() {
+    declareResources(this);
+    console.log(this.zombieImgs);
+
     this.fireBallImage = loadImage("./assets/fireBall.png");
-    this.zombieImg = loadImage(
-      "assets/zombies/Screenshot_2020-01-27_at_11-removebg-preview.png"
-    );
+    this.zombieImgs = {
+      N: this.zombie1N,
+      S: this.zombie1S,
+      W: this.zombie1W,
+      E: this.zombie1E
+    };
     this.player = new Player();
 
     this.obstacles.push(

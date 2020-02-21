@@ -1,6 +1,8 @@
 const game = new Game();
+
 function preload() {
   //preloading all the resources before setup of the game
+
   game.preload();
 }
 function setup() {
