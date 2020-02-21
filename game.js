@@ -173,18 +173,18 @@ class Game {
         this.createZombie();
         this.createZombie();
       }
-    } else if (this.deathsCounter < 20) {
-      if (frameCount % 160 === 0) {
-        this.createZombie();
-        this.createZombie();
-      }
     } else if (this.deathsCounter < 30) {
       if (frameCount % 160 === 0) {
         this.createZombie();
         this.createZombie();
+      }
+    } else if (this.deathsCounter < 50) {
+      if (frameCount % 160 === 0) {
+        this.createZombie();
+        this.createZombie();
         this.createZombie();
       }
-    } else if (this.deathsCounter < 40) {
+    } else if (this.deathsCounter < 70) {
       if (frameCount % 160 === 0) {
         this.createZombie();
         this.createZombie();
