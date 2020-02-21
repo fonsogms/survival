@@ -2,8 +2,14 @@
 let zombie1W=[]
 let zombie1E=[] */
 declareResources = game => {
-  game.zombie1N = [loadImage("assets/zombies/zombie1N.png")];
-  game.zombie1S = [loadImage("assets/zombies/zombie1S.png")];
-  game.zombie1W = [loadImage("assets/zombies/zombie1W.png")];
-  game.zombie1E = [loadImage("assets/zombies/zombie1E.png")];
+  game.zombie1N = [];
+  game.zombie1S = [];
+  game.zombie1W = [];
+  game.zombie1E = [];
+  for (let i = 1; i <= 3; i++) {
+    game.zombie1N.push(loadImage(`assets/zombies/zombie1N${i}.png`));
+    game.zombie1S.push(loadImage(`assets/zombies/zombie1S${i}.png`));
+    game.zombie1W.push(loadImage(`assets/zombies/zombie1W${i}.png`));
+    game.zombie1E.push(loadImage(`assets/zombies/zombie1E${i}.png`));
+  }
 };

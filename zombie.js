@@ -12,6 +12,7 @@ class Zombie {
     this.f = 0;
     this.g = 0;
     this.h = 0;
+    this.i = 0;
   }
   //function using A* algorithm to find the best path to get to the player
   aFinder(origin, target) {
@@ -84,40 +85,41 @@ class Zombie {
   checkDirection(previousPos, newPos, target) {
     if (newPos.x < previousPos.x) {
       this.direction = "W";
-      this.img = this.imgs.W[0];
+      this.img = this.imgs.W[this.i % 3];
     }
     if (newPos.x > previousPos.x) {
       this.direction = "E";
-      this.img = this.imgs.E[0];
+      this.img = this.imgs.E[this.i % 3];
     }
     if (newPos.y < previousPos.y) {
       this.direction = "N";
-      this.img = this.imgs.N[0];
+      this.img = this.imgs.N[this.i % 3];
     }
     if (newPos.y > previousPos.y) {
       this.direction = "S";
-      this.img = this.imgs.S[0];
+      this.img = this.imgs.S[this.i % 3];
     }
   }
   lookAtPlayer(target) {
     if (this.x > target.x) {
       this.direction = "W";
-      this.img = this.imgs.W[0];
+      this.img = this.imgs.W[this.i % 3];
     }
     if (this.x < target.x) {
       this.direction = "E";
-      this.img = this.imgs.E[0];
+      this.img = this.imgs.E[this.i % 3];
     }
     if (this.y > target.y) {
       this.direction = "N";
-      this.img = this.imgs.N[0];
+      this.img = this.imgs.N[this.i % 3];
     }
     if (this.y < target.y) {
       this.direction = "S";
-      this.img = this.imgs.S[0];
+      this.img = this.imgs.S[this.i % 3];
     }
   }
   zombieMovement() {
+    this.i++;
     this.occupySpots(this);
     //this is to make sure the zombie is only as close to one step to the player
     this.lookAtPlayer(game.player);
