@@ -131,10 +131,10 @@ class Game {
     fill(0, 102, 153);
     text("Bruh", 400, 500);
   }
-  createZombie() {
+  createZombie(zombie) {
     let random = Math.floor(Math.random() * this.entrances.length);
     let randomEntance = this.entrances[random];
-    this.zombies.push(new Zombie(...Object.values(randomEntance)));
+    this.zombies.push(new zombie(...Object.values(randomEntance)));
   }
   zombiesEating() {
     if (frameCount % 60 === 0) {
@@ -162,41 +162,41 @@ class Game {
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
-        this.createZombie();
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 10) {
       if (frameCount % 200 === 0) {
-        this.createZombie();
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 15) {
       if (frameCount % 200 === 0) {
-        this.createZombie();
-        this.createZombie();
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 30) {
       if (frameCount % 160 === 0) {
-        this.createZombie();
+        this.createZombie(Zombie);
         this.createZombie();
       }
     } else if (this.deathsCounter < 50) {
       if (frameCount % 160 === 0) {
-        this.createZombie();
-        this.createZombie();
-        this.createZombie();
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 70) {
       if (frameCount % 160 === 0) {
-        this.createZombie();
-        this.createZombie();
-        this.createZombie();
-        this.createZombie();
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
       }
     } else {
       if (frameCount % 130 === 0) {
-        this.createZombie();
-        this.createZombie();
-        this.createZombie();
-        this.createZombie();
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
+        this.createZombie(Zombie);
       }
     }
 
