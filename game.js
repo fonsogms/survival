@@ -176,7 +176,7 @@ class Game {
     } else if (this.deathsCounter < 30) {
       if (frameCount % 160 === 0) {
         this.createZombie(Zombie);
-        this.createZombie();
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 50) {
       if (frameCount % 160 === 0) {
