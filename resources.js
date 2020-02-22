@@ -2,7 +2,7 @@
 let zombie1W=[]
 let zombie1E=[] */
 declareResources = game => {
-  for (let i = 1; i <= 2; i++) {
+  for (let i = 1; i <= 3; i++) {
     game[`zombie${i}N`] = [];
     game[`zombie${i}S`] = [];
     game[`zombie${i}W`] = [];

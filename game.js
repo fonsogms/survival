@@ -14,7 +14,7 @@ class Game {
   preload() {
     declareResources(this);
     this.fireBallImage = loadImage("./assets/fireBall.png");
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= 3; i++) {
       this[`zombie${i}Imgs`] = {
         N: this[`zombie${i}N`],
         S: this[`zombie${i}S`],
@@ -148,7 +148,7 @@ class Game {
     if (frameCount % 60 === 0) {
       for (let zombie of this.zombies) {
         if (this.checkDistance(zombie, this.player) <= 100) {
-          this.player.health -= 50;
+          this.player.health -= zombie.damage;
           if (this.player.health <= 0) {
             this.uded();
             noLoop();
@@ -170,7 +170,9 @@ class Game {
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
+        this.createZombie(Zombie);
         this.createZombie(Zombie2);
+        this.createZombie(Zombie3);
       }
     } else if (this.deathsCounter < 10) {
       if (frameCount % 200 === 0) {
