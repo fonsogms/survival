@@ -13,15 +13,16 @@ class Game {
   }
   preload() {
     declareResources(this);
-    console.log(this.zombieImgs);
-
     this.fireBallImage = loadImage("./assets/fireBall.png");
-    this.zombieImgs = {
-      N: this.zombie1N,
-      S: this.zombie1S,
-      W: this.zombie1W,
-      E: this.zombie1E
-    };
+    for (let i = 1; i <= 2; i++) {
+      this[`zombie${i}Imgs`] = {
+        N: this[`zombie${i}N`],
+        S: this[`zombie${i}S`],
+        W: this[`zombie${i}W`],
+        E: this[`zombie${i}E`]
+      };
+    }
+
     this.player = new Player();
 
     this.obstacles.push(
@@ -141,6 +142,7 @@ class Game {
     let random = Math.floor(Math.random() * this.entrances.length);
     let randomEntance = this.entrances[random];
     this.zombies.push(new zombie(...Object.values(randomEntance)));
+    console.log(new zombie(...Object.values(randomEntance)));
   }
   zombiesEating() {
     if (frameCount % 60 === 0) {
@@ -168,7 +170,7 @@ class Game {
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
-        this.createZombie(Zombie);
+        this.createZombie(Zombie2);
       }
     } else if (this.deathsCounter < 10) {
       if (frameCount % 200 === 0) {

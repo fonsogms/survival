@@ -5,7 +5,7 @@ class Zombie {
     this.x = x;
     this.y = y;
     this.health = 100;
-    this.imgs = game.zombieImgs;
+    this.imgs = game.zombie1Imgs;
     this.img;
     this.direction = "N";
     this.path = [];
