@@ -170,13 +170,15 @@ class Game {
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
-        this.createZombie(Zombie);
-        this.createZombie(Zombie2);
-        this.createZombie(Zombie3);
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        // this.createZombie(Zombie2);
+        // this.createZombie(Zombie3);
       }
     } else if (this.deathsCounter < 10) {
       if (frameCount % 200 === 0) {
-        this.createZombie(Zombie);
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
       }
     } else if (this.deathsCounter < 15) {
       if (frameCount % 200 === 0) {

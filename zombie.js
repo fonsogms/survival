@@ -6,7 +6,8 @@ class Zombie {
     this.y = y;
     this.health = 100;
     this.imgs = game.zombie1Imgs;
-    this.img;
+    this.img = this.imgs.S[0];
+    this.speed = 260;
     this.damage = 20;
     this.direction = "N";
     this.path = [];
@@ -149,15 +150,32 @@ class Zombie {
     this.occupySpots(this);
   }
   draw() {
+    // console.log(this.speed);
+    // console.log(300 - this.speed);
+    this.rate = 300 - this.speed;
+    // console.log(frameCount % rate);
     // first is to make sure that we are occupying the first spot
-    if (frameCount % 20 === 0) {
+    /*  if (frameCount % 200 === 0) {
+      console.log("working");
+      console.log(frameCount % this.rate === 0);
+      if (frameCount % this.rate === 0) {
+        console.log(1);
+      }
+    } */
+
+    if (frameCount % this.rate === 0) {
+      console.log("breaking?");
       game.coordinates.forEach(elem => {
         if (elem.x === this.x && elem.y === this.y) {
           elem.occupied = true;
         }
       });
     }
-    if (frameCount % 20 === 0) {
+    /*  if (frameCount % this.rate === 0) {
+      console.log("check");
+    } */
+    if (frameCount % this.rate === 0) {
+      console.log("hello");
       this.zombieMovement();
     }
 
