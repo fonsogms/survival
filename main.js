@@ -19,44 +19,56 @@ function draw() {
 }
 
 function playerMovement(player, left, up, right, down, shoot) {
-  [37, 38, 39, 40];
+  let futurePlayer = { ...player };
+  game.coordinates.forEach(elem => {
+    if (elem.x === player.x && elem.y === player.y) {
+      console.log("working?");
+      elem.occupied = !elem.occupied;
+    }
+  });
   if (keyCode === left) {
     player.image = player.soldierLeft;
-    player.x -= 100;
+    futurePlayer.x -= 100;
     player.direction = "W";
-    if (player.x < 0 || game.checkCoordinates(player)) {
-      player.x += 100;
+    if (futurePlayer.x >= 0 && !game.checkCoordinates(futurePlayer)) {
+      player.x -= 100;
     }
   }
   // move Right
   else if (keyCode === right) {
     player.image = player.soldierRight;
-    player.x += 100;
+    futurePlayer.x += 100;
     player.direction = "E";
-    if (player.x >= width || game.checkCoordinates(player)) {
-      player.x -= 100;
+    if (futurePlayer.x < width && !game.checkCoordinates(futurePlayer)) {
+      player.x += 100;
     }
   }
   //move Up
   else if (keyCode === up) {
     player.image = player.soldierUp;
-    player.y -= 100;
+    futurePlayer.y -= 100;
     player.direction = "N";
-    if (player.y < 0 || game.checkCoordinates(player)) {
-      player.y += 100;
+    if (futurePlayer.y >= 0 && !game.checkCoordinates(futurePlayer)) {
+      player.y -= 100;
     }
   }
   // move Down
   else if (keyCode === down) {
     player.image = player.soldierDown;
-    player.y += 100;
+    futurePlayer.y += 100;
     player.direction = "S";
-    if (player.y >= height || game.checkCoordinates(player)) {
-      player.y -= 100;
+    if (futurePlayer.y < height && !game.checkCoordinates(futurePlayer)) {
+      player.y += 100;
     }
   } else if (keyCode === shoot) {
     player.shoot();
   }
+  game.coordinates.forEach(elem => {
+    if (elem.x === player.x && elem.y === player.y) {
+      console.log("working?");
+      elem.occupied = true;
+    }
+  });
 }
 function keyPressed() {
   playerMovement(game.player, 37, 38, 39, 40, 32);

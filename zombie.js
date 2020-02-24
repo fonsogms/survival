@@ -128,6 +128,7 @@ class Zombie {
 
     if (game.checkDistance(this, game.player) > 100) {
       this.path = this.aFinder(this, game.player);
+
       if (this.path) {
         this.checkDirection(this, this.path[1], game.player);
         this.x = this.path[1].x;

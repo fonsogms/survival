@@ -75,6 +75,16 @@ class Game {
       });
     });
     console.log("setup");
+
+    //occupying the first places
+    this.coordinates.forEach(elem => {
+      if (
+        (elem.x === this.player.x && elem.y === this.player.y) ||
+        (elem.x === this.player2.x && elem.y === this.player2.y)
+      ) {
+        elem.occupied = true;
+      }
+    });
   }
   checkCoordinates(obj) {
     for (let elem of game.coordinates) {
@@ -171,7 +181,7 @@ class Game {
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
         let zombies = [Zombie, Zombie2, Zombie3];
-        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        // this.createZombie(zombies[Math.floor(Math.random() * 3)]);
         // this.createZombie(Zombie2);
         // this.createZombie(Zombie3);
       }
