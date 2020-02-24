@@ -10,6 +10,7 @@ class Game {
       { x: 900, y: -100 }
     ];
     this.deathsCounter = 0;
+    this.fireBalls = [];
   }
   preload() {
     declareResources(this);
@@ -157,7 +158,7 @@ class Game {
   }
   draw() {
     // draw obstacles
-
+    this.fireBalls = [...this.player.fireBalls, ...this.player2.fireBalls];
     this.coordinates.forEach(elem => {
       if (elem.occupied) {
         fill("blue");
@@ -170,7 +171,7 @@ class Game {
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
         let zombies = [Zombie, Zombie2, Zombie3];
-        // this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
         // this.createZombie(Zombie2);
         // this.createZombie(Zombie3);
       }
@@ -212,14 +213,16 @@ class Game {
     }
 
     //manage zombies death and fireballs disappearance
-    for (let fireBall of this.player.fireBalls) {
+    for (let fireBall of this.fireBalls) {
       if (this.checkCoordinates(fireBall)) {
         this.removeFromArray(this.player.fireBalls, fireBall);
+        this.removeFromArray(this.player2.fireBalls, fireBall);
       }
       for (let zombie of this.zombies) {
         if (!this.checkCollision(fireBall, zombie)) {
           this.removeFromArray(this.player.fireBalls, fireBall);
-
+          this.removeFromArray(this.player2.fireBalls, fireBall);
+          sa;
           zombie.health -= fireBall.damage;
           if (zombie.health <= 0) {
             zombie.occupySpots(zombie);
