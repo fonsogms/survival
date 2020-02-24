@@ -127,14 +127,12 @@ class Zombie {
     let closestPlayer = {};
     for (let player of game.players) {
       let newPath = this.aFinder(this, player);
-      console.log(newPath.length);
-      if (newPath.length < this.path.length) {
+      if (newPath && newPath.length < this.path.length) {
         this.path = newPath;
         closestPlayer = player;
       }
     }
     this.lookAtPlayer(closestPlayer);
-    console.log(closestPlayer);
     if (game.checkDistance(this, closestPlayer) > 100) {
       if (this.path) {
         this.checkDirection(this, this.path[1], game.players[0]);

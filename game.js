@@ -140,8 +140,8 @@ class Game {
     }
     return possibleSteps;
   }
-  checkCollision(a, b) {
-    return a.y + 80 < b.y || a.y > b.y + 80 || a.x + 80 < b.x || a.x > b.x + 80;
+  checkCollision(a, b, c) {
+    return a.y + c < b.y || a.y > b.y + c || a.x + c < b.x || a.x > b.x + c;
   }
   uded() {
     textSize(70);
@@ -237,8 +237,9 @@ class Game {
         if (this.checkCoordinates(fireBall)) {
           this.removeFromArray(player.fireBalls, fireBall);
         }
+
         for (let zombie of this.zombies) {
-          if (!this.checkCollision(fireBall, zombie)) {
+          if (!this.checkCollision(fireBall, zombie, 80)) {
             this.removeFromArray(player.fireBalls, fireBall);
             zombie.health -= fireBall.damage;
             if (zombie.health <= 0) {
