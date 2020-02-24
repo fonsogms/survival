@@ -222,7 +222,6 @@ class Game {
         if (!this.checkCollision(fireBall, zombie)) {
           this.removeFromArray(this.player.fireBalls, fireBall);
           this.removeFromArray(this.player2.fireBalls, fireBall);
-          sa;
           zombie.health -= fireBall.damage;
           if (zombie.health <= 0) {
             zombie.occupySpots(zombie);
