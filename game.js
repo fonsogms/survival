@@ -181,7 +181,7 @@ class Game {
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
         let zombies = [Zombie, Zombie2, Zombie3];
-        // this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
         // this.createZombie(Zombie2);
         // this.createZombie(Zombie3);
       }
