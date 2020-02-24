@@ -4,7 +4,7 @@ class Player {
     this.y = y;
     this.direction = "S";
     this.fireBalls = [];
-    this.health = Infinity;
+    this.health = 100;
   }
 
   preload() {

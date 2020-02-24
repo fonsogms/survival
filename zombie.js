@@ -123,14 +123,14 @@ class Zombie {
     this.i++;
     //this.occupySpots(this);
     //this is to make sure the zombie is only as close to one step to the player
-    this.lookAtPlayer(game.player);
+    this.lookAtPlayer(game.players[0]);
 
     if (
-      game.checkDistance(this, game.player) > 100 &&
-      game.checkDistance(this, game.player2) > 100
+      game.checkDistance(this, game.players[0]) > 100 &&
+      game.checkDistance(this, game.players[1]) > 100
     ) {
-      let path1 = this.aFinder(this, game.player);
-      let path2 = this.aFinder(this, game.player2);
+      let path1 = this.aFinder(this, game.players[0]);
+      let path2 = this.aFinder(this, game.players[1]);
       if (path1 && path2 && path1.length < path2.length) {
         this.path = path1;
       } else {
@@ -138,18 +138,21 @@ class Zombie {
       }
 
       if (this.path) {
-        this.checkDirection(this, this.path[1], game.player);
+        this.checkDirection(this, this.path[1], game.players[0]);
         this.x = this.path[1].x;
         this.y = this.path[1].y;
       } else {
         let possibleSteps = game.getNeighbors(this);
         let nextStep = { distance: Infinity };
         for (let possibleStep of possibleSteps) {
-          possibleStep.distance = game.checkDistance(possibleStep, game.player);
+          possibleStep.distance = game.checkDistance(
+            possibleStep,
+            game.players[0]
+          );
           if (possibleStep.distance < nextStep.distance) {
             nextStep = possibleStep;
           }
-          this.lookAtPlayer(game.player);
+          this.lookAtPlayer(game.players[0]);
         }
         this.x = nextStep.x;
         this.y = nextStep.y;

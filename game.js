@@ -11,6 +11,7 @@ class Game {
     ];
     this.deathsCounter = 0;
     this.fireBalls = [];
+    this.players = [];
   }
   preload() {
     declareResources(this);
@@ -24,8 +25,8 @@ class Game {
       };
     }
 
-    this.player = new Player(0, 0);
-    this.player2 = new Player(100, 100);
+    this.players.push(new Player(0, 0));
+    this.players.push(new Player(100, 100));
 
     this.obstacles.push(
       new Obstacle(100, 200),
@@ -40,8 +41,8 @@ class Game {
     );
 
     //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
-    this.player.preload();
-    this.player2.preload();
+    this.players[0].preload();
+    this.players[1].preload();
     console.log("preload");
   }
   drawGrid() {
@@ -80,7 +81,7 @@ class Game {
     /*     this.coordinates.forEach(elem => {
       if (
         (elem.x === this.player.x && elem.y === this.player.y) ||
-        (elem.x === this.player2.x && elem.y === this.player2.y)
+        (elem.x === this.players[1].x && elem.y === this.players[1].y)
       ) {
         elem.occupied = true;
       }
@@ -155,12 +156,16 @@ class Game {
   }
   zombiesEating() {
     if (frameCount % 60 === 0) {
-      for (let zombie of this.zombies) {
-        if (this.checkDistance(zombie, this.player) <= 100) {
-          this.player.health -= zombie.damage;
-          if (this.player.health <= 0) {
-            this.uded();
-            noLoop();
+      for (let player of this.players) {
+        for (let zombie of this.zombies) {
+          if (this.checkDistance(zombie, player) <= 100) {
+            player.health -= zombie.damage;
+            console.log(player.health);
+            if (player.health <= 0) {
+              this.removeFromArray(this.players, player);
+              /* this.uded();
+              noLoop(); */
+            }
           }
         }
       }
@@ -168,15 +173,19 @@ class Game {
   }
   draw() {
     // draw obstacles
-    this.fireBalls = [...this.player.fireBalls, ...this.player2.fireBalls];
+    this.fireBalls = [];
+    this.players.forEach(player => {
+      this.fireBalls.push(...player.fireBalls);
+      player.draw();
+    });
+
     this.coordinates.forEach(elem => {
       if (elem.occupied) {
         fill("blue");
         rect(elem.x, elem.y, 100, 100);
       }
     });
-    this.player.draw();
-    this.player2.draw();
+
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
@@ -224,19 +233,19 @@ class Game {
 
     //manage zombies death and fireballs disappearance
     for (let fireBall of this.fireBalls) {
-      if (this.checkCoordinates(fireBall)) {
-        this.removeFromArray(this.player.fireBalls, fireBall);
-        this.removeFromArray(this.player2.fireBalls, fireBall);
-      }
-      for (let zombie of this.zombies) {
-        if (!this.checkCollision(fireBall, zombie)) {
-          this.removeFromArray(this.player.fireBalls, fireBall);
-          this.removeFromArray(this.player2.fireBalls, fireBall);
-          zombie.health -= fireBall.damage;
-          if (zombie.health <= 0) {
-            zombie.occupySpots(zombie);
-            this.removeFromArray(this.zombies, zombie);
-            this.deathsCounter++;
+      for (let player of this.players) {
+        if (this.checkCoordinates(fireBall)) {
+          this.removeFromArray(player.fireBalls, fireBall);
+        }
+        for (let zombie of this.zombies) {
+          if (!this.checkCollision(fireBall, zombie)) {
+            this.removeFromArray(player.fireBalls, fireBall);
+            zombie.health -= fireBall.damage;
+            if (zombie.health <= 0) {
+              zombie.occupySpots(zombie);
+              this.removeFromArray(this.zombies, zombie);
+              this.deathsCounter++;
+            }
           }
         }
       }
@@ -249,6 +258,7 @@ class Game {
     this.obstacles.forEach(elem => {
       elem.draw();
     });
+
     this.zombiesEating();
   }
 }

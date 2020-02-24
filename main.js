@@ -71,8 +71,8 @@ function playerMovement(player, left, up, right, down, shoot) {
   }); */
 }
 function keyPressed() {
-  playerMovement(game.player, 37, 38, 39, 40, 32);
-  playerMovement(game.player2, 65, 87, 68, 83, 81);
+  playerMovement(game.players[0], 37, 38, 39, 40, 32);
+  playerMovement(game.players[1], 65, 87, 68, 83, 81);
 
   //move Left
 }
