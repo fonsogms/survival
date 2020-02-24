@@ -4,7 +4,7 @@ class Zombie {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.health = 100;
+    this.health = 50;
     this.imgs = game.zombie1Imgs;
     this.img = this.imgs.S[0];
     this.speed = 260;
@@ -122,7 +122,7 @@ class Zombie {
   }
   zombieMovement() {
     this.i++;
-    this.occupySpots(this);
+    //this.occupySpots(this);
     //this is to make sure the zombie is only as close to one step to the player
     this.lookAtPlayer(game.player);
 
@@ -130,7 +130,6 @@ class Zombie {
       this.path = this.aFinder(this, game.player);
       if (this.path) {
         this.checkDirection(this, this.path[1], game.player);
-        console.log(this.direction);
         this.x = this.path[1].x;
         this.y = this.path[1].y;
       } else {
@@ -147,36 +146,29 @@ class Zombie {
         this.y = nextStep.y;
       }
     }
-    this.occupySpots(this);
+    // this.occupySpots(this);
   }
   draw() {
-    // console.log(this.speed);
-    // console.log(300 - this.speed);
     this.rate = 300 - this.speed;
-    // console.log(frameCount % rate);
     // first is to make sure that we are occupying the first spot
-    /*  if (frameCount % 200 === 0) {
-      console.log("working");
-      console.log(frameCount % this.rate === 0);
-      if (frameCount % this.rate === 0) {
-        console.log(1);
-      }
-    } */
 
-    if (frameCount % this.rate === 0) {
-      console.log("breaking?");
-      game.coordinates.forEach(elem => {
-        if (elem.x === this.x && elem.y === this.y) {
-          elem.occupied = true;
-        }
-      });
-    }
     /*  if (frameCount % this.rate === 0) {
       console.log("check");
     } */
     if (frameCount % this.rate === 0) {
-      console.log("hello");
+      game.coordinates.forEach(elem => {
+        if (elem.x === this.x && elem.y === this.y) {
+          console.log("working?");
+          elem.occupied = !elem.occupied;
+        }
+      });
       this.zombieMovement();
+      game.coordinates.forEach(elem => {
+        if (elem.x === this.x && elem.y === this.y) {
+          console.log("working?");
+          elem.occupied = !elem.occupied;
+        }
+      });
     }
 
     image(this.img, this.x, this.y, 100, 100);

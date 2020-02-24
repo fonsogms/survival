@@ -1,10 +1,10 @@
 class Player {
-  constructor() {
-    this.x = 100;
-    this.y = 300;
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
     this.direction = "S";
     this.fireBalls = [];
-    this.health = 200;
+    this.health = Infinity;
   }
 
   preload() {

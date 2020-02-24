@@ -4,10 +4,10 @@ class Game {
     this.coordinates = [];
     this.zombies = [];
     this.entrances = [
-      { x: 0, y: 0 },
-      { x: 900, y: 900 },
-      { x: 0, y: 900 },
-      { x: 900, y: 0 }
+      { x: -100, y: 0 },
+      { x: 1000, y: 900 },
+      { x: 0, y: 1000 },
+      { x: 900, y: -100 }
     ];
     this.deathsCounter = 0;
   }
@@ -23,16 +23,15 @@ class Game {
       };
     }
 
-    this.player = new Player();
+    this.player = new Player(0, 0);
+    this.player2 = new Player(100, 100);
 
     this.obstacles.push(
-      new Obstacle(100, 100),
       new Obstacle(100, 200),
-      new Obstacle(200, 300),
-      new Obstacle(100, 400),
-      new Obstacle(100, 400),
-      new Obstacle(500, 400),
-      new Obstacle(500, 500),
+      new Obstacle(200, 400),
+      new Obstacle(300, 400),
+      new Obstacle(400, 400),
+
       new Obstacle(600, 500),
       new Obstacle(900, 500),
       new Obstacle(700, 600),
@@ -41,7 +40,7 @@ class Game {
 
     //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
     this.player.preload();
-    console.log(this.player);
+    this.player2.preload();
     console.log("preload");
   }
   drawGrid() {
@@ -142,7 +141,6 @@ class Game {
     let random = Math.floor(Math.random() * this.entrances.length);
     let randomEntance = this.entrances[random];
     this.zombies.push(new zombie(...Object.values(randomEntance)));
-    console.log(new zombie(...Object.values(randomEntance)));
   }
   zombiesEating() {
     if (frameCount % 60 === 0) {
@@ -167,11 +165,12 @@ class Game {
       }
     });
     this.player.draw();
+    this.player2.draw();
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
         let zombies = [Zombie, Zombie2, Zombie3];
-        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        // this.createZombie(zombies[Math.floor(Math.random() * 3)]);
         // this.createZombie(Zombie2);
         // this.createZombie(Zombie3);
       }
