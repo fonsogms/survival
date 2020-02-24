@@ -77,14 +77,14 @@ class Game {
     console.log("setup");
 
     //occupying the first places
-    this.coordinates.forEach(elem => {
+    /*     this.coordinates.forEach(elem => {
       if (
         (elem.x === this.player.x && elem.y === this.player.y) ||
         (elem.x === this.player2.x && elem.y === this.player2.y)
       ) {
         elem.occupied = true;
       }
-    });
+    }); */
   }
   checkCoordinates(obj) {
     for (let elem of game.coordinates) {

@@ -20,12 +20,12 @@ function draw() {
 
 function playerMovement(player, left, up, right, down, shoot) {
   let futurePlayer = { ...player };
-  game.coordinates.forEach(elem => {
+  /*   game.coordinates.forEach(elem => {
     if (elem.x === player.x && elem.y === player.y) {
       console.log("working?");
       elem.occupied = !elem.occupied;
     }
-  });
+  }); */
   if (keyCode === left) {
     player.image = player.soldierLeft;
     futurePlayer.x -= 100;
@@ -63,12 +63,12 @@ function playerMovement(player, left, up, right, down, shoot) {
   } else if (keyCode === shoot) {
     player.shoot();
   }
-  game.coordinates.forEach(elem => {
+  /*  game.coordinates.forEach(elem => {
     if (elem.x === player.x && elem.y === player.y) {
       console.log("working?");
       elem.occupied = true;
     }
-  });
+  }); */
 }
 function keyPressed() {
   playerMovement(game.player, 37, 38, 39, 40, 32);

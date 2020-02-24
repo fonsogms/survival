@@ -30,7 +30,6 @@ class Zombie {
       }
       let current = bestStep;
       if (current.x === target.x && current.y === target.y) {
-        console.log("Done");
         let path = [];
         let temp = current;
         path.push(temp);
@@ -126,8 +125,17 @@ class Zombie {
     //this is to make sure the zombie is only as close to one step to the player
     this.lookAtPlayer(game.player);
 
-    if (game.checkDistance(this, game.player) > 100) {
-      this.path = this.aFinder(this, game.player);
+    if (
+      game.checkDistance(this, game.player) > 100 &&
+      game.checkDistance(this, game.player2) > 100
+    ) {
+      let path1 = this.aFinder(this, game.player);
+      let path2 = this.aFinder(this, game.player2);
+      if (path1 && path2 && path1.length < path2.length) {
+        this.path = path1;
+      } else {
+        this.path = path2;
+      }
 
       if (this.path) {
         this.checkDirection(this, this.path[1], game.player);
@@ -159,14 +167,12 @@ class Zombie {
     if (frameCount % this.rate === 0) {
       game.coordinates.forEach(elem => {
         if (elem.x === this.x && elem.y === this.y) {
-          console.log("working?");
           elem.occupied = !elem.occupied;
         }
       });
       this.zombieMovement();
       game.coordinates.forEach(elem => {
         if (elem.x === this.x && elem.y === this.y) {
-          console.log("working?");
           elem.occupied = !elem.occupied;
         }
       });
