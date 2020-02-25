@@ -24,9 +24,10 @@ class Game {
         E: this[`zombie${i}E`]
       };
     }
-
-    this.players.push(new Player(0, 0));
-    this.players.push(new Player(100, 100));
+    this.player1 = new Player(0, 0);
+    this.player2 = new Player(100, 100);
+    this.players.push(this.player1);
+    this.players.push(this.player2);
 
     this.obstacles.push(
       new Obstacle(100, 200),
@@ -97,6 +98,15 @@ class Game {
         }
       }
     }
+  }
+  showPlayersHealth() {
+    this.players.forEach((player, index) => {
+      fill("blue");
+      textSize(20);
+      // rect(100, player.health, player.x, player.y);
+      rect(player.x, player.y, player.health, 10);
+      text(`Player${index + 1}: `, player.x + 18, player.y - 10);
+    });
   }
   checkDistance(obj, obj2) {
     let distance = Math.abs(obj.x - obj2.x) + Math.abs(obj.y - obj2.y);
@@ -261,5 +271,6 @@ class Game {
     });
 
     this.zombiesEating();
+    this.showPlayersHealth();
   }
 }
