@@ -7,6 +7,7 @@ function preload() {
 }
 function setup() {
   //setup the first elements of the game
+
   createCanvas(1000, 1000);
   game.setup();
 }
@@ -14,6 +15,8 @@ function draw() {
   clear();
 
   game.drawGrid();
+  background(color(77, 50, 26));
+
   game.draw();
   //to show constantly the elements
 }

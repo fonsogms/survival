@@ -6,6 +6,6 @@ class Zombie3 extends Zombie {
 
     this.health = 200;
     this.damage = 20;
-    this.speed = 280;
+    this.speed = 290;
   }
 }
