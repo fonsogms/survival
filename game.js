@@ -18,6 +18,7 @@ class Game {
     this.fireBallImage = loadImage("./assets/fireBall.png");
     this.earthImg = loadImage("./assets/Tierra.png");
     this.stoneImg = loadImage("./assets/piedra.png");
+
     for (let i = 1; i <= 3; i++) {
       this[`zombie${i}Imgs`] = {
         N: this[`zombie${i}N`],
@@ -26,6 +27,7 @@ class Game {
         E: this[`zombie${i}E`]
       };
     }
+    console.log(this);
     this.player1 = new Player(0, 0);
     this.player2 = new Player(100, 100);
     this.players.push(this.player1);
@@ -70,6 +72,7 @@ class Game {
         });
       }
     }
+
     //checking occupied obstacles
     this.coordinates.forEach(coordinate => {
       this.obstacles.forEach(obstacle => {

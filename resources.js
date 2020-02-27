@@ -7,7 +7,7 @@ declareResources = game => {
     game[`zombie${i}S`] = [];
     game[`zombie${i}W`] = [];
     game[`zombie${i}E`] = [];
-    for (let j = 1; j <= 3; j++) {
+    for (let j = 1; j <= 4; j++) {
       game[`zombie${i}N`].push(loadImage(`assets/zombies/zombie${i}N${j}.png`));
       game[`zombie${i}S`].push(loadImage(`assets/zombies/zombie${i}S${j}.png`));
       game[`zombie${i}W`].push(loadImage(`assets/zombies/zombie${i}W${j}.png`));

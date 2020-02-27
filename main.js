@@ -7,7 +7,7 @@ function preload() {
 }
 function setup() {
   //setup the first elements of the game
-
+  console.log("hello");
   createCanvas(1000, 1000);
   game.setup();
 }

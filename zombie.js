@@ -86,37 +86,37 @@ class Zombie {
   checkDirection(previousPos, newPos, target) {
     if (newPos.x < previousPos.x) {
       this.direction = "W";
-      this.img = this.imgs.W[this.i % 3];
+      this.img = this.imgs.W[this.i % 4];
     }
     if (newPos.x > previousPos.x) {
       this.direction = "E";
-      this.img = this.imgs.E[this.i % 3];
+      this.img = this.imgs.E[this.i % 4];
     }
     if (newPos.y < previousPos.y) {
       this.direction = "N";
-      this.img = this.imgs.N[this.i % 3];
+      this.img = this.imgs.N[this.i % 4];
     }
     if (newPos.y > previousPos.y) {
       this.direction = "S";
-      this.img = this.imgs.S[this.i % 3];
+      this.img = this.imgs.S[this.i % 4];
     }
   }
   lookAtPlayer(target) {
     if (this.x > target.x) {
       this.direction = "W";
-      this.img = this.imgs.W[this.i % 3];
+      this.img = this.imgs.W[this.i % 4];
     }
     if (this.x < target.x) {
       this.direction = "E";
-      this.img = this.imgs.E[this.i % 3];
+      this.img = this.imgs.E[this.i % 4];
     }
     if (this.y > target.y) {
       this.direction = "N";
-      this.img = this.imgs.N[this.i % 3];
+      this.img = this.imgs.N[this.i % 4];
     }
     if (this.y < target.y) {
       this.direction = "S";
-      this.img = this.imgs.S[this.i % 3];
+      this.img = this.imgs.S[this.i % 4];
     }
   }
   zombieMovement() {
