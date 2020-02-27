@@ -17,6 +17,7 @@ class Game {
     declareResources(this);
     this.fireBallImage = loadImage("./assets/fireBall.png");
     this.earthImg = loadImage("./assets/Tierra.png");
+    this.stoneImg = loadImage("./assets/piedra.png");
     for (let i = 1; i <= 3; i++) {
       this[`zombie${i}Imgs`] = {
         N: this[`zombie${i}N`],
@@ -201,7 +202,7 @@ class Game {
     this.coordinates.forEach(elem => {
       if (elem.occupied) {
         // fill("blue");
-        rect(elem.x, elem.y, 100, 100);
+        image(game.stoneImg, this.x, this.y, 100, 100);
       } else {
         image(this.earthImg, elem.x, elem.y, 100, 100);
       }
@@ -214,17 +215,14 @@ class Game {
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
       if (frameCount % 300 === 0) {
-        //let zombies = [Zombie, Zombie2, Zombie3];
-        // this.createZombie(zombies[Math.floor(Math.random() * 3)]);
-        // this.createZombie(Zombie2);
-        // this.createZombie(Zombie3);
-        this.createZombie(Zombie3);
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
       }
     } else if (this.deathsCounter < 10) {
       if (frameCount % 200 === 0) {
-        //let zombies = [Zombie, Zombie2, Zombie3];
-        // this.createZombie(zombies[Math.floor(Math.random() * 3)]);
-        this.createZombie(Zombie3);
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        //this.createZombie(Zombie3);
       }
     } else if (this.deathsCounter < 15) {
       if (frameCount % 200 === 0) {

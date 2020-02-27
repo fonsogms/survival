@@ -9,6 +9,6 @@ class Obstacle {
   }
   draw() {
     fill("red");
-    rect(this.x, this.y, 100, 100);
+    image(game.stoneImg, this.x, this.y, 100, 100);
   }
 }
