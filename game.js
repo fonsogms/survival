@@ -200,11 +200,11 @@ class Game {
     frameRate(30);
 
     this.coordinates.forEach(elem => {
+      image(this.earthImg, elem.x, elem.y, 100, 100);
+
       if (elem.occupied) {
         // fill("blue");
         image(game.stoneImg, this.x, this.y, 100, 100);
-      } else {
-        image(this.earthImg, elem.x, elem.y, 100, 100);
       }
     });
     this.players.forEach(player => {
