@@ -217,15 +217,14 @@ class Game {
 
     //Create random zombies in especified places
     if (this.deathsCounter < 5) {
-      if (frameCount % 300 === 0) {
-        let zombies = [Zombie, Zombie2, Zombie3];
-        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+      if (frameCount % 200 === 0) {
+        /*  let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]); */
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 10) {
-      if (frameCount % 200 === 0) {
-        let zombies = [Zombie, Zombie2, Zombie3];
-        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
-        //this.createZombie(Zombie3);
+      if (frameCount % 180 === 0) {
+        this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 15) {
       if (frameCount % 200 === 0) {
@@ -233,29 +232,33 @@ class Game {
         this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 30) {
-      if (frameCount % 160 === 0) {
-        this.createZombie(Zombie);
+      if (frameCount % 200 === 0) {
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
         this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 60) {
-      if (frameCount % 160 === 0) {
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
+      if (frameCount % 200 === 0) {
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
       }
     } else if (this.deathsCounter < 120) {
       if (frameCount % 160 === 0) {
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
+        let zombies = [Zombie, Zombie2, Zombie3];
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
       }
     } else {
       if (frameCount % 130 === 0) {
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
-        this.createZombie(Zombie);
+        let zombies = [Zombie, Zombie2, Zombie3];
+
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
       }
     }
 
