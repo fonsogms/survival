@@ -212,7 +212,7 @@ class Game {
         image(game.stoneImg, this.x, this.y, 100, 100);
       }
     });
-    this.players.forEach(player => {
+    this.players.forEach((player, index) => {
       this.fireBalls.push(...player.fireBalls);
       player.draw();
     });
@@ -295,5 +295,8 @@ class Game {
 
     this.zombiesEating();
     this.showPlayersHealth();
+    textSize(40);
+    fill("red");
+    text(`Zombies killed: ${this.deathsCounter}`, 600, 50);
   }
 }

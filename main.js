@@ -15,6 +15,27 @@ function setup() {
   createCanvas(1000, 1000);
   game.setup();
 }
+function beforeStartGame() {
+  fill("black");
+  rect(0, 0, 1000, 1000);
+  fill("red");
+  textSize(36);
+  textFont(myFont);
+  text("Press 1 or 2 for number of players", 200, 200);
+
+  image(title, 200, -200, 600, 600);
+  if (keyIsPressed) {
+    if (keyCode === 49) {
+      gameStart = true;
+    } else if (keyCode === 50) {
+      // console.log(game.players.push(game.player2));
+      game.players.push(game.player2);
+      game.players[1].preload();
+      gameStart = true;
+      console.log("not my dad");
+    }
+  }
+}
 function draw() {
   if (gameStart) {
     clear();
@@ -22,26 +43,14 @@ function draw() {
     background(color(77, 50, 26));
 
     game.draw();
+    if (gamePaused) {
+      fill("red");
+      textSize(100);
+      text("Paused", 350, 500);
+    }
     //to show constantly the elements
   } else {
-    fill("black");
-    rect(0, 0, 1000, 1000);
-    fill("red");
-    textSize(36);
-    textFont(myFont);
-    text("Press 1 or 2 for number of players", 200, 200);
-
-    image(title, 200, -200, 600, 600);
-    if (keyIsPressed) {
-      if (keyCode === 49) {
-      } else if (keyCode === 50) {
-        // console.log(game.players.push(game.player2));
-        game.players.push(game.player2);
-        game.players[1].preload();
-        gameStart = true;
-        console.log("not my dad");
-      }
-    }
+    beforeStartGame();
   }
 }
 
