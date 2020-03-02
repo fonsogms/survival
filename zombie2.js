@@ -5,7 +5,7 @@ class Zombie2 extends Zombie {
     this.img = this.imgs.S[0];
 
     this.health = 300;
-    this.speed = 270;
+    this.speed = 285;
     this.damage = 60;
   }
 }

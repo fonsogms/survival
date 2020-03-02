@@ -1,8 +1,12 @@
 const game = new Game();
-
+let gameStart = false;
+let gamePaused = false;
+let title;
+let myFont;
 function preload() {
   //preloading all the resources before setup of the game
-
+  title = loadImage("assets/pixil-frame-0.png");
+  myFont = loadFont("assets/Lacquer-Regular.ttf");
   game.preload();
 }
 function setup() {
@@ -12,13 +16,33 @@ function setup() {
   game.setup();
 }
 function draw() {
-  clear();
+  if (gameStart) {
+    clear();
 
-  game.drawGrid();
-  background(color(77, 50, 26));
+    background(color(77, 50, 26));
 
-  game.draw();
-  //to show constantly the elements
+    game.draw();
+    //to show constantly the elements
+  } else {
+    fill("black");
+    rect(0, 0, 1000, 1000);
+    fill("red");
+    textSize(36);
+    textFont(myFont);
+    text("Press 1 or 2 for number of players", 200, 200);
+
+    image(title, 200, -200, 600, 600);
+    if (keyIsPressed) {
+      if (keyCode === 49) {
+      } else if (keyCode === 50) {
+        // console.log(game.players.push(game.player2));
+        game.players.push(game.player2);
+        game.players[1].preload();
+        gameStart = true;
+        console.log("not my dad");
+      }
+    }
+  }
 }
 
 function playerMovement(player, left, up, right, down, shoot) {
@@ -74,8 +98,18 @@ function playerMovement(player, left, up, right, down, shoot) {
   }); */
 }
 function keyPressed() {
-  playerMovement(game.player1, 37, 38, 39, 40, 32);
-  playerMovement(game.player2, 65, 87, 68, 83, 81);
+  if (gameStart) {
+    if (keyCode === 13) {
+      gamePaused = !gamePaused;
+    }
+    if (!gamePaused) {
+      playerMovement(game.player1, 37, 38, 39, 40, 32);
+      playerMovement(game.player2, 65, 87, 68, 83, 81);
+      loop();
+    } else {
+      noLoop();
+    }
+  }
 
   //move Left
 }

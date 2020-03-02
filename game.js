@@ -12,6 +12,8 @@ class Game {
     this.deathsCounter = 0;
     this.fireBalls = [];
     this.players = [];
+    this.start = false;
+    this.pause = false;
   }
   preload() {
     declareResources(this);
@@ -29,9 +31,9 @@ class Game {
     }
     console.log(this);
     this.player1 = new Player(0, 0);
-    this.player2 = new Player(100, 100);
+    this.player2 = new Player(300, 200);
     this.players.push(this.player1);
-    this.players.push(this.player2);
+    // this.players.push(this.player2);
 
     this.obstacles.push(
       new Obstacle(100, 200),
@@ -47,7 +49,7 @@ class Game {
 
     //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
     this.players[0].preload();
-    this.players[1].preload();
+    //this.players[1].preload();
     console.log("preload");
   }
   drawGrid() {
