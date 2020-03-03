@@ -9,16 +9,16 @@ class FireBall {
   draw() {
     switch (this.direction) {
       case "N":
-        this.y -= 40;
+        this.y -= square_side;
         break;
       case "S":
-        this.y += 40;
+        this.y += square_side;
         break;
       case "W":
-        this.x -= 40;
+        this.x -= square_side;
         break;
       case "E":
-        this.x += 40;
+        this.x += square_side;
         break;
     }
 

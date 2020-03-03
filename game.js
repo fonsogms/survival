@@ -4,10 +4,10 @@ class Game {
     this.coordinates = [];
     this.zombies = [];
     this.entrances = [
-      { x: -100, y: 0 },
-      { x: 1000, y: 900 },
-      { x: 0, y: 1000 },
-      { x: 900, y: -100 }
+      { x: -square_side, y: 0 },
+      { x: WIDTH + square_side, y: HEIGHT },
+      { x: 0, y: HEIGHT + square_side },
+      { x: WIDTH, y: -square_side }
     ];
     this.deathsCounter = 0;
     this.fireBalls = [];
@@ -130,7 +130,12 @@ class Game {
       fill("blue");
       textSize(20);
       // rect(100, player.health, player.x, player.y);
-      rect(player.x, player.y, player.health, 10);
+      rect(
+        player.x,
+        player.y,
+        (square_side * 100) / player.health,
+        square_side / 10
+      );
       text(`Player${index + 1}: `, player.x + 18, player.y - 10);
     });
   }
@@ -208,6 +213,7 @@ class Game {
     }
   }
   draw() {
+    console.log(frameRate());
     // draw obstacles
     // frameRate(300);
     this.fireBalls = [];
@@ -304,8 +310,12 @@ class Game {
 
     this.zombiesEating();
     this.showPlayersHealth();
-    textSize(40);
+    textSize(width / 40);
     fill("red");
-    text(`Zombies killed: ${this.deathsCounter}`, 600, 50);
+    text(
+      `Zombies killed: ${this.deathsCounter}`,
+      width - square_side * 7,
+      square_side
+    );
   }
 }

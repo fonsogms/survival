@@ -1,5 +1,6 @@
 let square_side = 25;
-
+let WIDTH = 600;
+let HEIGHT = 600;
 const game = new Game();
 let gameStart = false;
 let gamePaused = false;
@@ -14,18 +15,18 @@ function preload() {
 function setup() {
   //setup the first elements of the game
   console.log("hello");
-  createCanvas(600, 600);
+  createCanvas(WIDTH, HEIGHT);
   game.setup();
 }
 function beforeStartGame() {
   fill("black");
   rect(0, 0, width, height);
   fill("red");
-  textSize(36);
+  textSize(height / 30);
   textFont(myFont);
-  text("Press 1 or 2 for number of players", width / 3, height / 2);
+  text("Press 1 or 2 for number of players", width / 4, height / 4);
 
-  image(title, width / 2.5, height - height - 150, 600, 600);
+  image(title, width / 3.5, height - height * 1.1, width / 2, height / 2);
   if (keyIsPressed) {
     if (keyCode === 49) {
       gameStart = true;
@@ -34,7 +35,6 @@ function beforeStartGame() {
       game.players.push(game.player2);
       game.players[1].preload();
       gameStart = true;
-      console.log("not my dad");
     }
   }
 }
@@ -47,8 +47,8 @@ function draw() {
     game.draw();
     if (gamePaused) {
       fill("red");
-      textSize(100);
-      text("Paused", 350, 500);
+      textSize(height / 10);
+      text("Paused", width / 3, height / 2);
     }
     //to show constantly the elements
   } else {
