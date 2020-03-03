@@ -52,7 +52,7 @@ class Zombie {
             }
           })
         ) {
-          let tempG = current.g + 100;
+          let tempG = current.g + square_side;
           if (
             openList.find(openNode => {
               if (neighbor.x === openNode.x && neighbor.y === openNode.y) {
@@ -133,7 +133,7 @@ class Zombie {
       }
     }
     this.lookAtPlayer(closestPlayer);
-    if (game.checkDistance(this, closestPlayer) > 100) {
+    if (game.checkDistance(this, closestPlayer) > square_side) {
       if (this.path) {
         this.checkDirection(this, this.path[1], game.players[0]);
         this.x = this.path[1].x;
@@ -178,6 +178,6 @@ class Zombie {
       });
     }
 
-    image(this.img, this.x, this.y, 100, 100);
+    image(this.img, this.x, this.y, square_side, square_side);
   }
 }

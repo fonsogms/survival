@@ -9,19 +9,19 @@ class FireBall {
   draw() {
     switch (this.direction) {
       case "N":
-        this.y -= 20;
+        this.y -= 40;
         break;
       case "S":
-        this.y += 20;
+        this.y += 40;
         break;
       case "W":
-        this.x -= 20;
+        this.x -= 40;
         break;
       case "E":
-        this.x += 20;
+        this.x += 40;
         break;
     }
 
-    image(this.img, this.x, this.y, 100, 100);
+    image(this.img, this.x, this.y, square_side, square_side);
   }
 }

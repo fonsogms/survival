@@ -36,15 +36,24 @@ class Game {
     // this.players.push(this.player2);
 
     this.obstacles.push(
-      new Obstacle(100, 200),
-      new Obstacle(200, 400),
-      new Obstacle(300, 400),
-      new Obstacle(400, 400),
+      new Obstacle(100, 100),
+      new Obstacle(200, 100),
+      new Obstacle(300, 100),
+      new Obstacle(400, 100),
+      new Obstacle(500, 100),
+      new Obstacle(600, 100),
+      new Obstacle(700, 100),
+      new Obstacle(800, 100),
 
-      new Obstacle(600, 500),
-      new Obstacle(900, 500),
-      new Obstacle(700, 600),
-      new Obstacle(100, 0)
+      new Obstacle(100, 800),
+      new Obstacle(200, 800),
+      new Obstacle(300, 800),
+      new Obstacle(400, 800),
+      new Obstacle(500, 800),
+      new Obstacle(600, 800),
+      new Obstacle(700, 800),
+      new Obstacle(800, 800),
+      new Obstacle(800, 300)
     );
 
     //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
@@ -53,17 +62,17 @@ class Game {
     console.log("preload");
   }
   drawGrid() {
-    for (let i = 0; i <= width; i += 100) {
+    for (let i = 0; i <= width; i += square_side) {
       //grid creation
       line(0, i, width, i);
       line(i, 0, i, height);
     }
   }
   setup() {
-    for (let i = 0; i <= width; i += 100) {
+    for (let i = 0; i <= width; i += square_side) {
       //grid creation
 
-      for (let j = 0; j <= height; j += 100) {
+      for (let j = 0; j <= height; j += square_side) {
         this.coordinates.push({
           x: i,
           y: j,
@@ -101,7 +110,7 @@ class Game {
         // fill("blue");
         // rect(elem.x, elem.y, 100, 100);
       } else {
-        image(this.earthImg, elem.x, elem.y, 100, 100);
+        image(this.earthImg, elem.x, elem.y, square_side, square_side);
       }
     });
   }
@@ -138,7 +147,7 @@ class Game {
   }
   getNeighbors(step) {
     let possibleSteps = [];
-    for (let i = 100; i >= -100; i -= 200) {
+    for (let i = square_side; i >= -square_side; i -= square_side * 2) {
       let coordinate = { x: step.x + i, y: step.y };
       if (
         this.checkCoordinates(coordinate) ||
@@ -154,7 +163,7 @@ class Game {
       }
       possibleSteps.push(coordinate);
     }
-    for (let j = 100; j >= -100; j -= 200) {
+    for (let j = square_side; j >= -square_side; j -= square_side * 2) {
       let coordinate = { x: step.x, y: step.y + j };
       if (
         this.checkCoordinates(coordinate) ||
@@ -185,7 +194,7 @@ class Game {
     if (frameCount % 60 === 0) {
       for (let player of this.players) {
         for (let zombie of this.zombies) {
-          if (this.checkDistance(zombie, player) <= 100) {
+          if (this.checkDistance(zombie, player) <= square_side) {
             player.health -= zombie.damage;
             console.log(player.health);
             if (player.health <= 0) {
@@ -205,11 +214,11 @@ class Game {
     frameRate(30);
 
     this.coordinates.forEach(elem => {
-      image(this.earthImg, elem.x, elem.y, 100, 100);
+      image(this.earthImg, elem.x, elem.y, square_side, square_side);
 
       if (elem.occupied) {
         // fill("blue");
-        image(game.stoneImg, this.x, this.y, 100, 100);
+        image(game.stoneImg, this.x, this.y, square_side, square_side);
       }
     });
     this.players.forEach((player, index) => {

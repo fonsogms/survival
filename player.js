@@ -20,7 +20,7 @@ class Player {
   }
 
   draw() {
-    image(this.image, this.x, this.y, 100, 100);
+    image(this.image, this.x, this.y, square_side, square_side);
     this.fireBalls.forEach(elem => {
       elem.draw();
     });

@@ -1,3 +1,5 @@
+let square_side = 25;
+
 const game = new Game();
 let gameStart = false;
 let gamePaused = false;
@@ -12,18 +14,18 @@ function preload() {
 function setup() {
   //setup the first elements of the game
   console.log("hello");
-  createCanvas(1000, 1000);
+  createCanvas(600, 600);
   game.setup();
 }
 function beforeStartGame() {
   fill("black");
-  rect(0, 0, 1000, 1000);
+  rect(0, 0, width, height);
   fill("red");
   textSize(36);
   textFont(myFont);
-  text("Press 1 or 2 for number of players", 200, 200);
+  text("Press 1 or 2 for number of players", width / 3, height / 2);
 
-  image(title, 200, -200, 600, 600);
+  image(title, width / 2.5, height - height - 150, 600, 600);
   if (keyIsPressed) {
     if (keyCode === 49) {
       gameStart = true;
@@ -64,37 +66,37 @@ function playerMovement(player, left, up, right, down, shoot) {
   }); */
   if (keyCode === left) {
     player.image = player.soldierLeft;
-    futurePlayer.x -= 100;
+    futurePlayer.x -= square_side;
     player.direction = "W";
     if (futurePlayer.x >= 0 && !game.checkCoordinates(futurePlayer)) {
-      player.x -= 100;
+      player.x -= square_side;
     }
   }
   // move Right
   else if (keyCode === right) {
     player.image = player.soldierRight;
-    futurePlayer.x += 100;
+    futurePlayer.x += square_side;
     player.direction = "E";
     if (futurePlayer.x < width && !game.checkCoordinates(futurePlayer)) {
-      player.x += 100;
+      player.x += square_side;
     }
   }
   //move Up
   else if (keyCode === up) {
     player.image = player.soldierUp;
-    futurePlayer.y -= 100;
+    futurePlayer.y -= square_side;
     player.direction = "N";
     if (futurePlayer.y >= 0 && !game.checkCoordinates(futurePlayer)) {
-      player.y -= 100;
+      player.y -= square_side;
     }
   }
   // move Down
   else if (keyCode === down) {
     player.image = player.soldierDown;
-    futurePlayer.y += 100;
+    futurePlayer.y += square_side;
     player.direction = "S";
     if (futurePlayer.y < height && !game.checkCoordinates(futurePlayer)) {
-      player.y += 100;
+      player.y += square_side;
     }
   } else if (keyCode === shoot) {
     player.shoot();
