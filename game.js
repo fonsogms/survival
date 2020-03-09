@@ -34,27 +34,12 @@ class Game {
     this.player2 = new Player(300, 200);
     this.players.push(this.player1);
     // this.players.push(this.player2);
-
-    this.obstacles.push(
-      new Obstacle(100, 100),
-      new Obstacle(200, 100),
-      new Obstacle(300, 100),
-      new Obstacle(400, 100),
-      new Obstacle(500, 100),
-      new Obstacle(600, 100),
-      new Obstacle(700, 100),
-      new Obstacle(800, 100),
-
-      new Obstacle(100, 800),
-      new Obstacle(200, 800),
-      new Obstacle(300, 800),
-      new Obstacle(400, 800),
-      new Obstacle(500, 800),
-      new Obstacle(600, 800),
-      new Obstacle(700, 800),
-      new Obstacle(800, 800),
-      new Obstacle(800, 300)
-    );
+    for (let i = 1; i < WIDTH / square_side - 1; i++) {
+      this.obstacles.push(new Obstacle(square_side * i, square_side));
+    }
+    for (let i = 1; i < WIDTH / square_side - 1; i++) {
+      this.obstacles.push(new Obstacle(square_side * i, WIDTH - square_side));
+    }
 
     //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
     this.players[0].preload();
@@ -133,7 +118,7 @@ class Game {
       rect(
         player.x,
         player.y,
-        (square_side * 100) / player.health,
+        (square_side * player.health) / 100,
         square_side / 10
       );
       text(`Player${index + 1}: `, player.x + 18, player.y - 10);
@@ -287,7 +272,7 @@ class Game {
         }
 
         for (let zombie of this.zombies) {
-          if (!this.checkCollision(fireBall, zombie, 80)) {
+          if (!this.checkCollision(fireBall, zombie, square_side / 2)) {
             this.removeFromArray(player.fireBalls, fireBall);
             zombie.health -= fireBall.damage;
             if (zombie.health <= 0) {
@@ -314,7 +299,7 @@ class Game {
     fill("red");
     text(
       `Zombies killed: ${this.deathsCounter}`,
-      width - square_side * 7,
+      width - square_side,
       square_side
     );
   }

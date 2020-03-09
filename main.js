@@ -1,4 +1,4 @@
-let square_side = 25;
+let square_side = 50;
 let WIDTH = 600;
 let HEIGHT = 600;
 const game = new Game();
@@ -14,7 +14,8 @@ function preload() {
 }
 function setup() {
   //setup the first elements of the game
-  console.log("hello");
+  /*   console.log("hello");
+   */
   createCanvas(WIDTH, HEIGHT);
   game.setup();
 }
