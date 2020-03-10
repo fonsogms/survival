@@ -74,6 +74,8 @@ class Zombie {
       }
     }
   }
+
+  //function to ocuppy the grid spot
   occupySpots(obj) {
     game.coordinates.forEach(elem => {
       if (elem.x === obj.x && elem.y === obj.y) {
@@ -83,6 +85,7 @@ class Zombie {
   }
 
   //check the direction of the zombie to add images according to its direction
+
   checkDirection(previousPos, newPos, target) {
     if (newPos.x < previousPos.x) {
       this.direction = "W";
@@ -121,7 +124,6 @@ class Zombie {
   }
   zombieMovement() {
     this.i++;
-    //this.occupySpots(this);
     //this is to make sure the zombie is only as close to one step to the player
     this.path = new Array(10000);
     let closestPlayer = {};
@@ -159,13 +161,9 @@ class Zombie {
   }
   draw() {
     image(game.earthImg, this.x, this.y, square_side, square_side);
-
+    // speed of the zombie
     this.rate = 300 - this.speed;
-    // first is to make sure that we are occupying the first spot
 
-    /*  if (frameCount % this.rate === 0) {
-      console.log("check");
-    } */
     if (frameCount % this.rate === 0) {
       game.coordinates.forEach(elem => {
         if (elem.x === this.x && elem.y === this.y) {
