@@ -225,11 +225,8 @@ class Game {
     frameRate(30);
 
     this.coordinates.forEach(elem => {
-      image(this.earthImg, elem.x, elem.y, square_side, square_side);
-
-      if (elem.occupied) {
-        // fill("blue");
-        image(game.stoneImg, this.x, this.y, square_side, square_side);
+      if (!elem.occupied) {
+        image(this.earthImg, elem.x, elem.y, square_side, square_side);
       }
     });
     this.players.forEach((player, index) => {

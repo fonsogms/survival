@@ -158,6 +158,8 @@ class Zombie {
     // this.occupySpots(this);
   }
   draw() {
+    image(game.earthImg, this.x, this.y, square_side, square_side);
+
     this.rate = 300 - this.speed;
     // first is to make sure that we are occupying the first spot
 
