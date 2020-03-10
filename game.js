@@ -41,7 +41,27 @@ class Game {
       this.obstacles.push(new Obstacle(square_side * i, WIDTH - square_side));
     }
 
-    //this.zombies.push(new Zombie(900, 900), new Zombie(0, 900));
+    for (let i = 1; i <= 4; i++) {
+      this.obstacles.push(new Obstacle(square_side * i, square_side * 8));
+      this.obstacles.push(
+        new Obstacle(square_side * 1, square_side * (3 + i === 6 ? 7 : 3 + i))
+      );
+      this.obstacles.push(
+        new Obstacle(square_side * 4, square_side * (3 + i === 5 ? 6 : 3 + i))
+      );
+      this.obstacles.push(new Obstacle(square_side * 7, square_side * (i + 3)));
+      this.obstacles.push(
+        new Obstacle(square_side * 10, square_side * (i + 3))
+      );
+
+      if (i !== 3) {
+        this.obstacles.push(new Obstacle(square_side * i, square_side * 3));
+        this.obstacles.push(
+          new Obstacle(square_side * (6 + i), square_side * 3)
+        );
+      }
+    }
+
     this.players[0].preload();
     //this.players[1].preload();
     console.log("preload");
@@ -299,8 +319,8 @@ class Game {
     fill("red");
     text(
       `Zombies killed: ${this.deathsCounter}`,
-      width - square_side,
-      square_side
+      width - width / 4,
+      square_side / 2
     );
   }
 }
