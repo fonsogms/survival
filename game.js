@@ -120,6 +120,8 @@ class Game {
       }
     });
   }
+
+  // check if its and occupied spot
   checkCoordinates(obj) {
     for (let elem of game.coordinates) {
       if (obj.x === elem.x && obj.y === elem.y) {
@@ -219,8 +221,6 @@ class Game {
     }
   }
   draw() {
-    console.log(frameRate());
-
     // this.fireBalls = [];
     frameRate(30);
 
@@ -230,7 +230,6 @@ class Game {
       }
     });
     this.players.forEach((player, index) => {
-      // this.fireBalls.push(...player.fireBalls);
       player.draw();
     });
 
@@ -291,7 +290,7 @@ class Game {
 
         for (let zombie of this.zombies) {
           if (!this.checkCollision(fireBall, zombie, square_side / 2)) {
-            this.removeFromArray(player.fireBalls, fireBall);
+            this.removeFromArray(this.fireBalls, fireBall);
             zombie.health -= fireBall.damage;
             if (zombie.health <= 0) {
               zombie.occupySpots(zombie);
