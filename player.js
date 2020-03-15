@@ -16,15 +16,12 @@ class Player {
     this.image = this.soldierUp;
   }
   shoot() {
-    this.fireBalls.push(new FireBall(this.x, this.y, this.direction));
+    game.fireBalls.push(new FireBall(this.x, this.y, this.direction));
   }
   createTurret() {
     game.turrets.push(new Turret(this.x, this.y, this.direction));
   }
   draw() {
     image(this.image, this.x, this.y, square_side, square_side);
-    this.fireBalls.forEach(elem => {
-      elem.draw();
-    });
   }
 }

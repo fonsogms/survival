@@ -220,9 +220,8 @@ class Game {
   }
   draw() {
     console.log(frameRate());
-    // draw obstacles
-    // frameRate(300);
-    this.fireBalls = [];
+
+    // this.fireBalls = [];
     frameRate(30);
 
     this.coordinates.forEach(elem => {
@@ -231,7 +230,7 @@ class Game {
       }
     });
     this.players.forEach((player, index) => {
-      this.fireBalls.push(...player.fireBalls);
+      // this.fireBalls.push(...player.fireBalls);
       player.draw();
     });
 
@@ -284,9 +283,10 @@ class Game {
 
     //manage zombies death and fireballs disappearance
     for (let fireBall of this.fireBalls) {
+      fireBall.draw();
       for (let player of this.players) {
         if (this.checkCoordinates(fireBall)) {
-          this.removeFromArray(player.fireBalls, fireBall);
+          this.removeFromArray(this.fireBalls, fireBall);
         }
 
         for (let zombie of this.zombies) {
