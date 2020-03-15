@@ -15,6 +15,7 @@ class Game {
     this.start = false;
     this.pause = false;
     this.turrets = [];
+    this.defensable = [];
   }
   preload() {
     declareResources(this);
@@ -305,10 +306,11 @@ class Game {
     this.zombies.forEach(elem => {
       elem.draw();
     });
-    this.turrets.forEach(elem => {
+
+    this.obstacles.forEach(elem => {
       elem.draw();
     });
-    this.obstacles.forEach(elem => {
+    this.turrets.forEach(elem => {
       elem.draw();
     });
 

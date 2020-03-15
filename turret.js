@@ -77,7 +77,9 @@ class Turret {
     }
   }
   draw() {
-    this.checkEnemies();
+    if (frameCount % 20 === 0) {
+      this.checkEnemies();
+    }
     image(this.imgs[this.direction], this.x, this.y, square_side, square_side);
   }
 }
