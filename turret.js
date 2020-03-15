@@ -42,10 +42,42 @@ class Turret {
         break;
       }
     }
+
+    for (let i = this.y; i >= 0; i -= square_side) {
+      //if there is an obstacle stop
+
+      if (game.checkCoordinates({ x: this.x, y: i })) {
+        console.log(i);
+        for (let zombie of game.zombies) {
+          if (this.x === zombie.x && i === zombie.y) {
+            this.direction = "N";
+            this.shoot();
+            return true;
+          }
+        }
+
+        break;
+      }
+    }
+
+    for (let i = this.y; i <= HEIGHT; i += square_side) {
+      //if there is an obstacle stop
+
+      if (game.checkCoordinates({ x: this.x, y: i })) {
+        for (let zombie of game.zombies) {
+          if (this.x === zombie.x && i === zombie.y) {
+            this.direction = "S";
+            this.shoot();
+            return true;
+          }
+        }
+
+        break;
+      }
+    }
   }
   draw() {
     this.checkEnemies();
-    console.log(this.checkEnemies());
     image(this.imgs[this.direction], this.x, this.y, square_side, square_side);
   }
 }
