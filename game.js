@@ -224,7 +224,7 @@ class Game {
     }
   }
 
-  createItem(item) {
+  createRandomNumbers() {
     let randomX;
     let randomY;
 
@@ -236,14 +236,26 @@ class Game {
         break;
       }
     }
-    this.hearts.push(new item(randomX, randomY));
+    return [randomX, randomY];
   }
   randomHeart() {
     if (frameCount % 100 === 0) {
       if (this.hearts.length > 0) {
         this.hearts.pop();
       } else {
-        this.createItem(Heart);
+        let randomNumbers = this.createRandomNumbers();
+        this.hearts.push(new Heart(...randomNumbers));
+      }
+    }
+  }
+
+  randomBomb() {
+    if (frameCount % 100 === 0) {
+      if (this.bombs.length > 0) {
+        this.bombs.pop();
+      } else {
+        let randomNumbers = this.createRandomNumbers();
+        this.bombs.push(new Bomb(...randomNumbers));
       }
     }
   }
@@ -260,9 +272,13 @@ class Game {
     this.players.forEach((player, index) => {
       player.draw();
       if (this.hearts[0] && !this.checkCollision(this.hearts[0], player, 0)) {
-        console.log("bum");
         this.hearts.pop();
         player.health = 100;
+      }
+      if (this.bombs[0] && !this.checkCollision(this.bombs[0], player, 0)) {
+        console.log("bum");
+        this.bombs.pop();
+        this.zombies = [];
       }
     });
 
@@ -335,12 +351,23 @@ class Game {
       }
     }
     this.randomHeart();
+    this.randomBomb();
     this.zombies.forEach(elem => {
       elem.draw();
     });
     this.hearts.forEach(elem => {
       image(
         this.heart,
+        elem.x + square_side / 4,
+        elem.y + square_side / 4,
+        square_side / 2,
+        square_side / 2
+      );
+    });
+
+    this.bombs.forEach(elem => {
+      image(
+        this.bomb,
         elem.x + square_side / 4,
         elem.y + square_side / 4,
         square_side / 2,
