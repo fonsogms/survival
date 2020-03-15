@@ -301,8 +301,16 @@ class Game {
     });
 
     //Create random zombies in especified places
-    if (this.deathsCounter < 5) {
-      if (frameCount % 200 === 0) {
+    if (this.deathsCounter > 0) {
+      if (frameCount % 20 === 0) {
+        let zombies = [Zombie, Zombie2, Zombie3];
+
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
+        this.createZombie(zombies[Math.floor(Math.random() * 3)]);
         /*  let zombies = [Zombie, Zombie2, Zombie3];
         this.createZombie(zombies[Math.floor(Math.random() * 3)]); */
         this.createZombie(Zombie);

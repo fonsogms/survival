@@ -5,7 +5,7 @@ class Player {
     this.direction = "S";
     this.fireBalls = [];
     this.health = 100;
-    this.turrets = 100;
+    this.turrets = 5;
   }
 
   preload() {
