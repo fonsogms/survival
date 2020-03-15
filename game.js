@@ -15,13 +15,14 @@ class Game {
     this.start = false;
     this.pause = false;
     this.turrets = [];
-    this.defensable = [];
+    this.defensables = [];
+    this.hearts = [];
+    this.bombs = [];
+    this.turretReload = [];
+    this.laserGun = [];
   }
   preload() {
     declareResources(this);
-    this.fireBallImage = loadImage("./assets/fireBall.png");
-    this.earthImg = loadImage("./assets/Tierra.png");
-    this.stoneImg = loadImage("./assets/piedra.png");
 
     for (let i = 1; i <= 3; i++) {
       this[`zombie${i}Imgs`] = {
@@ -206,13 +207,14 @@ class Game {
   }
   zombiesEating() {
     if (frameCount % 60 === 0) {
-      for (let player of this.players) {
+      for (let defensive of this.defensables) {
         for (let zombie of this.zombies) {
-          if (this.checkDistance(zombie, player) <= square_side) {
-            player.health -= zombie.damage;
-            console.log(player.health);
-            if (player.health <= 0) {
-              this.removeFromArray(this.players, player);
+          if (this.checkDistance(zombie, defensive) <= square_side) {
+            defensive.health -= zombie.damage;
+            console.log(defensive.health);
+            if (defensive.health <= 0) {
+              this.removeFromArray(this.players, defensive);
+              this.removeFromArray(this.turrets, defensive);
               /* this.uded();
               noLoop(); */
             }
@@ -221,8 +223,33 @@ class Game {
       }
     }
   }
+
+  createItem(item) {
+    let randomX;
+    let randomY;
+
+    while (true) {
+      randomX = square_side * Math.floor(Math.random() * (WIDTH / square_side));
+      randomY =
+        square_side * Math.floor(Math.random() * (HEIGHT / square_side));
+      if (!this.checkCoordinates({ x: randomX, y: randomY })) {
+        break;
+      }
+    }
+    this.hearts.push(new item(randomX, randomY));
+  }
+  randomHeart() {
+    if (frameCount % 100 === 0) {
+      if (this.hearts.length > 0) {
+        this.hearts.pop();
+      } else {
+        this.createItem(Heart);
+      }
+    }
+  }
   draw() {
     // this.fireBalls = [];
+    this.defensables = [...this.players, ...this.turrets];
     frameRate(30);
 
     this.coordinates.forEach(elem => {
@@ -232,6 +259,11 @@ class Game {
     });
     this.players.forEach((player, index) => {
       player.draw();
+      if (this.hearts[0] && !this.checkCollision(this.hearts[0], player, 0)) {
+        console.log("bum");
+        this.hearts.pop();
+        player.health = 100;
+      }
     });
 
     //Create random zombies in especified places
@@ -302,11 +334,19 @@ class Game {
         }
       }
     }
-
+    this.randomHeart();
     this.zombies.forEach(elem => {
       elem.draw();
     });
-
+    this.hearts.forEach(elem => {
+      image(
+        this.heart,
+        elem.x + square_side / 4,
+        elem.y + square_side / 4,
+        square_side / 2,
+        square_side / 2
+      );
+    });
     this.obstacles.forEach(elem => {
       elem.draw();
     });

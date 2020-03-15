@@ -127,7 +127,7 @@ class Zombie {
     //this is to make sure the zombie is only as close to one step to the player
     this.path = new Array(10000);
     let closestPlayer = {};
-    for (let player of game.players) {
+    for (let player of game.defensables) {
       let newPath = this.aFinder(this, player);
       if (newPath && newPath.length < this.path.length) {
         this.path = newPath;
@@ -137,7 +137,7 @@ class Zombie {
     this.lookAtPlayer(closestPlayer);
     if (game.checkDistance(this, closestPlayer) > square_side) {
       if (this.path) {
-        this.checkDirection(this, this.path[1], game.players[0]);
+        this.checkDirection(this, this.path[1], game.defensables[0]);
         this.x = this.path[1].x;
         this.y = this.path[1].y;
       } else {
@@ -146,12 +146,12 @@ class Zombie {
         for (let possibleStep of possibleSteps) {
           possibleStep.distance = game.checkDistance(
             possibleStep,
-            game.players[0]
+            game.defensables[0]
           );
           if (possibleStep.distance < nextStep.distance) {
             nextStep = possibleStep;
           }
-          this.lookAtPlayer(game.players[0]);
+          this.lookAtPlayer(game.defensables[0]);
         }
         this.x = nextStep.x;
         this.y = nextStep.y;

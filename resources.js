@@ -2,6 +2,10 @@
 let zombie1W=[]
 let zombie1E=[] */
 declareResources = game => {
+  game.fireBallImage = loadImage("./assets/fireBall.png");
+  game.earthImg = loadImage("./assets/Tierra.png");
+  game.stoneImg = loadImage("./assets/piedra.png");
+  game.heart = loadImage("assets/pixel-heart-2779422_1920.png");
   game.turretImgs = {
     N: loadImage("assets/turret/turretUp.png"),
     S: loadImage("assets/turret/turretDown.png"),

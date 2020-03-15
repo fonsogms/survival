@@ -5,6 +5,7 @@ class Player {
     this.direction = "S";
     this.fireBalls = [];
     this.health = 100;
+    this.turrets = 1;
   }
 
   preload() {
@@ -19,7 +20,10 @@ class Player {
     game.fireBalls.push(new FireBall(this.x, this.y, this.direction));
   }
   createTurret() {
-    game.turrets.push(new Turret(this.x, this.y, this.direction));
+    if (this.turrets > 0) {
+      game.turrets.push(new Turret(this.x, this.y, this.direction));
+      this.turrets -= 1;
+    }
   }
   draw() {
     image(this.image, this.x, this.y, square_side, square_side);

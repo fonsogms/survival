@@ -47,7 +47,6 @@ class Turret {
       //if there is an obstacle stop
 
       if (game.checkCoordinates({ x: this.x, y: i })) {
-        console.log(i);
         for (let zombie of game.zombies) {
           if (this.x === zombie.x && i === zombie.y) {
             this.direction = "N";
