@@ -57,7 +57,7 @@ function draw() {
   }
 }
 
-function playerMovement(player, left, up, right, down, shoot) {
+function playerMovement(player, left, up, right, down, shoot, turret) {
   let futurePlayer = { ...player };
   /*   game.coordinates.forEach(elem => {
     if (elem.x === player.x && elem.y === player.y) {
@@ -101,13 +101,9 @@ function playerMovement(player, left, up, right, down, shoot) {
     }
   } else if (keyCode === shoot) {
     player.shoot();
+  } else if (keyCode === turret) {
+    player.createTurret();
   }
-  /*  game.coordinates.forEach(elem => {
-    if (elem.x === player.x && elem.y === player.y) {
-      console.log("working?");
-      elem.occupied = true;
-    }
-  }); */
 }
 function keyPressed() {
   if (gameStart) {
@@ -115,7 +111,7 @@ function keyPressed() {
       gamePaused = !gamePaused;
     }
     if (!gamePaused) {
-      playerMovement(game.player1, 37, 38, 39, 40, 32);
+      playerMovement(game.player1, 37, 38, 39, 40, 32, 66);
       playerMovement(game.player2, 65, 87, 68, 83, 81);
       loop();
     } else {

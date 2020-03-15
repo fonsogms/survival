@@ -2,6 +2,12 @@
 let zombie1W=[]
 let zombie1E=[] */
 declareResources = game => {
+  game.turretImgs = {
+    N: loadImage("assets/turret/turretUp.png"),
+    S: loadImage("assets/turret/turretDown.png"),
+    W: loadImage("assets/turret/turretLeft.png"),
+    E: loadImage("assets/turret/turretRight.png")
+  };
   for (let i = 1; i <= 3; i++) {
     game[`zombie${i}N`] = [];
     game[`zombie${i}S`] = [];

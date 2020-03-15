@@ -14,6 +14,7 @@ class Game {
     this.players = [];
     this.start = false;
     this.pause = false;
+    this.turrets = [];
   }
   preload() {
     declareResources(this);
@@ -305,7 +306,9 @@ class Game {
     this.zombies.forEach(elem => {
       elem.draw();
     });
-
+    this.turrets.forEach(elem => {
+      elem.draw();
+    });
     this.obstacles.forEach(elem => {
       elem.draw();
     });
