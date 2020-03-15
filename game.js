@@ -20,6 +20,7 @@ class Game {
     this.bombs = [];
     this.turretReload = [];
     this.laserGun = [];
+    this.turretsItem = [];
   }
   preload() {
     declareResources(this);
@@ -239,7 +240,7 @@ class Game {
     return [randomX, randomY];
   }
   randomHeart() {
-    if (frameCount % 100 === 0) {
+    if (frameCount % 1000 === 0) {
       if (this.hearts.length > 0) {
         this.hearts.pop();
       } else {
@@ -250,12 +251,22 @@ class Game {
   }
 
   randomBomb() {
-    if (frameCount % 100 === 0) {
+    if (frameCount % 5000 === 0) {
       if (this.bombs.length > 0) {
         this.bombs.pop();
       } else {
         let randomNumbers = this.createRandomNumbers();
         this.bombs.push(new Bomb(...randomNumbers));
+      }
+    }
+  }
+  randomTurret() {
+    if (frameCount % 2000 === 0) {
+      if (this.turretsItem.length > 0) {
+        this.turretsItem.pop();
+      } else {
+        let randomNumbers = this.createRandomNumbers();
+        this.turretsItem.push(new TurretReload(...randomNumbers));
       }
     }
   }
@@ -279,6 +290,13 @@ class Game {
         console.log("bum");
         this.bombs.pop();
         this.zombies = [];
+      }
+      if (
+        this.turretsItem[0] &&
+        !this.checkCollision(this.turretsItem[0], player, 0)
+      ) {
+        this.turretsItem.pop();
+        player.turrets += 1;
       }
     });
 
@@ -352,6 +370,7 @@ class Game {
     }
     this.randomHeart();
     this.randomBomb();
+    this.randomTurret();
     this.zombies.forEach(elem => {
       elem.draw();
     });
@@ -366,13 +385,10 @@ class Game {
     });
 
     this.bombs.forEach(elem => {
-      image(
-        this.bomb,
-        elem.x + square_side / 4,
-        elem.y + square_side / 4,
-        square_side / 2,
-        square_side / 2
-      );
+      image(this.bomb, elem.x, elem.y, square_side, square_side);
+    });
+    this.turretsItem.forEach(elem => {
+      image(this.turretImgs.W, elem.x, elem.y, square_side, square_side);
     });
     this.obstacles.forEach(elem => {
       elem.draw();

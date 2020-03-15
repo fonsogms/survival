@@ -79,6 +79,12 @@ class Turret {
     if (frameCount % 20 === 0) {
       this.checkEnemies();
     }
-    image(this.imgs[this.direction], this.x, this.y, square_side, square_side);
+    image(
+      this.imgs[this.direction],
+      this.x,
+      this.y,
+      square_side * 1.1,
+      square_side * 1.1
+    );
   }
 }
