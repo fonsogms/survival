@@ -61,7 +61,7 @@ class Turret {
 
     for (let i = this.y; i <= HEIGHT; i += square_side) {
       //if there is an obstacle stop
-
+      // Markus was here
       if (game.checkCoordinates({ x: this.x, y: i })) {
         for (let zombie of game.zombies) {
           if (this.x === zombie.x && i === zombie.y) {

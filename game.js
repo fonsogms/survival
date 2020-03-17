@@ -19,7 +19,7 @@ class Game {
     this.hearts = [];
     this.bombs = [];
     this.turretReload = [];
-    this.laserGun = [];
+    this.laserGuns = [];
     this.turretsItem = [];
   }
   preload() {
@@ -261,12 +261,22 @@ class Game {
     }
   }
   randomTurret() {
-    if (frameCount % 2000 === 0) {
+    if (frameCount % 2100 === 0) {
       if (this.turretsItem.length > 0) {
         this.turretsItem.pop();
       } else {
         let randomNumbers = this.createRandomNumbers();
         this.turretsItem.push(new TurretReload(...randomNumbers));
+      }
+    }
+  }
+  randomLaserGun() {
+    if (frameCount % 1500 === 0) {
+      if (this.laserGuns.length > 0) {
+        this.laserGuns.pop();
+      } else {
+        let randomNumbers = this.createRandomNumbers();
+        this.laserGuns.push(new LaserGun(...randomNumbers));
       }
     }
   }
@@ -297,6 +307,16 @@ class Game {
       ) {
         this.turretsItem.pop();
         player.turrets += 1;
+      }
+      if (
+        this.laserGuns[0] &&
+        !this.checkCollision(this.laserGuns[0], player, 0)
+      ) {
+        this.laserGuns.pop();
+        player.laser = true;
+        setTimeout(function() {
+          player.laser = false;
+        }, 30000);
       }
     });
 
@@ -371,6 +391,7 @@ class Game {
     this.randomHeart();
     this.randomBomb();
     this.randomTurret();
+    this.randomLaserGun();
     this.zombies.forEach(elem => {
       elem.draw();
     });
@@ -383,7 +404,6 @@ class Game {
         square_side / 2
       );
     });
-
     this.bombs.forEach(elem => {
       image(this.bomb, elem.x, elem.y, square_side, square_side);
     });
@@ -395,6 +415,9 @@ class Game {
     });
     this.turrets.forEach(elem => {
       elem.draw();
+    });
+    this.laserGuns.forEach(elem => {
+      image(this.laserGun, elem.x, elem.y, square_side, square_side);
     });
 
     this.zombiesEating();

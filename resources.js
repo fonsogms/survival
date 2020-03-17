@@ -7,6 +7,11 @@ declareResources = game => {
   game.stoneImg = loadImage("./assets/piedra.png");
   game.heart = loadImage("assets/pixel-heart-2779422_1920.png");
   game.bomb = loadImage("assets/bomb_circle_0.png");
+  game.lasers = {
+    vertical: loadImage("assets/verticalLaser.png"),
+    horizontal: loadImage("assets/horizontalLaser.png")
+  };
+  game.laserGun = loadImage("assets/alien-gun-4780305_1280.png");
   game.turretImgs = {
     N: loadImage("assets/turret/turretUp.png"),
     S: loadImage("assets/turret/turretDown.png"),

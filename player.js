@@ -6,6 +6,7 @@ class Player {
     this.fireBalls = [];
     this.health = 100;
     this.turrets = 1;
+    this.laser = false;
   }
 
   preload() {
@@ -17,7 +18,11 @@ class Player {
     this.image = this.soldierUp;
   }
   shoot() {
-    game.fireBalls.push(new FireBall(this.x, this.y, this.direction));
+    if (this.laser) {
+      game.fireBalls.push(new Laser(this.x, this.y, this.direction));
+    } else {
+      game.fireBalls.push(new FireBall(this.x, this.y, this.direction));
+    }
   }
   createTurret() {
     if (this.turrets > 0) {
