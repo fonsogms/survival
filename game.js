@@ -4,7 +4,7 @@ class Game {
     this.coordinates = [];
     this.zombies = [];
     this.entrances = [
-      { x: 0, y: 0 },
+      { x: 0, y: -square_side },
       { x: WIDTH, y: HEIGHT },
       { x: 0, y: HEIGHT },
       { x: WIDTH, y: 0 }
@@ -299,7 +299,11 @@ class Game {
       if (this.bombs[0] && !this.checkCollision(this.bombs[0], player, 0)) {
         console.log("bum");
         this.bombs.pop();
-        this.zombies = [];
+        this.zombies.forEach(zombie => {
+          zombie.occupySpots(zombie);
+          this.removeFromArray(this.zombies, zombie);
+          this.deathsCounter++;
+        });
       }
       if (
         this.turretsItem[0] &&
