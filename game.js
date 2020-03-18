@@ -251,7 +251,7 @@ class Game {
   }
 
   randomBomb() {
-    if (frameCount % 100 === 0) {
+    if (frameCount % 5000 === 0) {
       if (this.bombs.length > 0) {
         this.bombs.pop();
       } else {
