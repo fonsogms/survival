@@ -239,46 +239,30 @@ class Game {
     }
     return [randomX, randomY];
   }
-  randomHeart() {
-    if (frameCount % 1000 === 0) {
-      if (this.hearts.length > 0) {
-        this.hearts.pop();
-      } else {
-        let randomNumbers = this.createRandomNumbers();
-        this.hearts.push(new Heart(...randomNumbers));
+  randomAppearence(itemArray, timeFrame, itemClass) {
+    let secondTime = frameCount - 200;
+    if (secondTime % timeFrame === 0) {
+      if (itemArray.length > 0) {
+        itemArray.pop();
       }
     }
+    if (frameCount % timeFrame === 0) {
+      let randomNumbers = this.createRandomNumbers();
+      itemArray.push(new itemClass(...randomNumbers));
+    }
+  }
+  randomHeart() {
+    this.randomAppearence(this.hearts, 1500, Heart);
   }
 
   randomBomb() {
-    if (frameCount % 5000 === 0) {
-      if (this.bombs.length > 0) {
-        this.bombs.pop();
-      } else {
-        let randomNumbers = this.createRandomNumbers();
-        this.bombs.push(new Bomb(...randomNumbers));
-      }
-    }
+    this.randomAppearence(this.bombs, 5000, Bomb);
   }
   randomTurret() {
-    if (frameCount % 2100 === 0) {
-      if (this.turretsItem.length > 0) {
-        this.turretsItem.pop();
-      } else {
-        let randomNumbers = this.createRandomNumbers();
-        this.turretsItem.push(new TurretReload(...randomNumbers));
-      }
-    }
+    this.randomAppearence(this.turretsItem, 2100, TurretReload);
   }
   randomLaserGun() {
-    if (frameCount % 1500 === 0) {
-      if (this.laserGuns.length > 0) {
-        this.laserGuns.pop();
-      } else {
-        let randomNumbers = this.createRandomNumbers();
-        this.laserGuns.push(new LaserGun(...randomNumbers));
-      }
-    }
+    this.randomAppearence(this.laserGuns, 1800, LaserGun);
   }
   randomZombies() {
     if (this.deathsCounter < 5) {
