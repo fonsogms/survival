@@ -112,7 +112,7 @@ function keyPressed() {
     }
     if (!gamePaused) {
       playerMovement(game.player1, 37, 38, 39, 40, 32, 66);
-      playerMovement(game.player2, 65, 87, 68, 83, 81);
+      playerMovement(game.player2, 65, 87, 68, 83, 81, 69);
       loop();
     } else {
       noLoop();

@@ -251,7 +251,7 @@ class Game {
   }
 
   randomBomb() {
-    if (frameCount % 5000 === 0) {
+    if (frameCount % 100 === 0) {
       if (this.bombs.length > 0) {
         this.bombs.pop();
       } else {
@@ -280,55 +280,11 @@ class Game {
       }
     }
   }
-  draw() {
-    // this.fireBalls = [];
-    this.defensables = [...this.players, ...this.turrets];
-    frameRate(30);
-
-    this.coordinates.forEach(elem => {
-      if (!elem.occupied) {
-        image(this.earthImg, elem.x, elem.y, square_side, square_side);
-      }
-    });
-    this.players.forEach((player, index) => {
-      player.draw();
-      if (this.hearts[0] && !this.checkCollision(this.hearts[0], player, 0)) {
-        this.hearts.pop();
-        player.health = 100;
-      }
-      if (this.bombs[0] && !this.checkCollision(this.bombs[0], player, 0)) {
-        console.log("bum");
-        this.bombs.pop();
-        this.zombies.forEach(zombie => {
-          zombie.occupySpots(zombie);
-          this.removeFromArray(this.zombies, zombie);
-          this.deathsCounter++;
-        });
-      }
-      if (
-        this.turretsItem[0] &&
-        !this.checkCollision(this.turretsItem[0], player, 0)
-      ) {
-        this.turretsItem.pop();
-        player.turrets += 1;
-      }
-      if (
-        this.laserGuns[0] &&
-        !this.checkCollision(this.laserGuns[0], player, 0)
-      ) {
-        this.laserGuns.pop();
-        player.laser = true;
-        setTimeout(function() {
-          player.laser = false;
-        }, 30000);
-      }
-    });
-
-    //Create random zombies in especified places
+  randomZombies() {
     if (this.deathsCounter < 5) {
       if (frameCount % 150 === 0) {
         /*  let zombies = [Zombie, Zombie2, Zombie3];
-        this.createZombie(zombies[Math.floor(Math.random() * 3)]); */
+      this.createZombie(zombies[Math.floor(Math.random() * 3)]); */
         this.createZombie(Zombie);
       }
     } else if (this.deathsCounter < 10) {
@@ -370,7 +326,59 @@ class Game {
         this.createZombie(zombies[Math.floor(Math.random() * 3)]);
       }
     }
+  }
+  playersIteration() {
+    this.players.forEach((player, index) => {
+      player.draw();
+      if (this.hearts[0] && !this.checkCollision(this.hearts[0], player, 0)) {
+        this.hearts.pop();
+        player.health = 100;
+      }
+      if (this.bombs[0] && !this.checkCollision(this.bombs[0], player, 0)) {
+        console.log("bum");
+        this.bombs.pop();
+        console.log("zombies length", this.zombies.length);
 
+        for (let i = this.zombies.length - 1; i >= 0; i--) {
+          let zombie = this.zombies[i];
+          zombie.occupySpots(zombie);
+          this.removeFromArray(this.zombies, zombie);
+          this.deathsCounter++;
+        }
+      }
+      if (
+        this.turretsItem[0] &&
+        !this.checkCollision(this.turretsItem[0], player, 0)
+      ) {
+        this.turretsItem.pop();
+        player.turrets += 1;
+      }
+      if (
+        this.laserGuns[0] &&
+        !this.checkCollision(this.laserGuns[0], player, 0)
+      ) {
+        this.laserGuns.pop();
+        player.laser = true;
+        setTimeout(function() {
+          player.laser = false;
+        }, 30000);
+      }
+    });
+  }
+  draw() {
+    console.log("zombies:", this.zombies.length);
+    // this.fireBalls = [];
+    this.defensables = [...this.players, ...this.turrets];
+    frameRate(30);
+
+    this.coordinates.forEach(elem => {
+      if (!elem.occupied) {
+        image(this.earthImg, elem.x, elem.y, square_side, square_side);
+      }
+    });
+
+    //Create random zombies in especified places
+    this.randomZombies();
     //manage zombies death and fireballs disappearance
     for (let fireBall of this.fireBalls) {
       fireBall.draw();
@@ -423,7 +431,7 @@ class Game {
     this.laserGuns.forEach(elem => {
       image(this.laserGun, elem.x, elem.y, square_side, square_side);
     });
-
+    this.playersIteration();
     this.zombiesEating();
     this.showPlayersHealth();
     textSize(width / 40);
