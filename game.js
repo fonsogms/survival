@@ -7,7 +7,7 @@ class Game {
       { x: 0, y: -square_side },
       { x: WIDTH, y: HEIGHT },
       { x: 0, y: HEIGHT },
-      { x: WIDTH, y: 0 }
+      { x: WIDTH, y: 0 },
     ];
     this.deathsCounter = 0;
     this.fireBalls = [];
@@ -21,6 +21,7 @@ class Game {
     this.turretReload = [];
     this.laserGuns = [];
     this.turretsItem = [];
+    this.finished = false;
   }
   preload() {
     declareResources(this);
@@ -30,10 +31,9 @@ class Game {
         N: this[`zombie${i}N`],
         S: this[`zombie${i}S`],
         W: this[`zombie${i}W`],
-        E: this[`zombie${i}E`]
+        E: this[`zombie${i}E`],
       };
     }
-    console.log(this);
     this.player1 = new Player(0, 0);
     this.player2 = new Player(300, 200);
     this.players.push(this.player1);
@@ -68,7 +68,6 @@ class Game {
 
     this.players[0].preload();
     //this.players[1].preload();
-    console.log("preload");
   }
   drawGrid() {
     for (let i = 0; i <= width; i += square_side) {
@@ -88,21 +87,19 @@ class Game {
           occupied: false,
           f: 0,
           g: 0,
-          h: 0
+          h: 0,
         });
       }
     }
 
     //checking occupied obstacles
-    this.coordinates.forEach(coordinate => {
-      this.obstacles.forEach(obstacle => {
+    this.coordinates.forEach((coordinate) => {
+      this.obstacles.forEach((obstacle) => {
         if (obstacle.x === coordinate.x && obstacle.y === coordinate.y) {
           coordinate.occupied = true;
         }
       });
     });
-
-    console.log("setup");
 
     //occupying the first places
     /*     this.coordinates.forEach(elem => {
@@ -114,7 +111,7 @@ class Game {
       }
     }); */
 
-    this.coordinates.forEach(elem => {
+    this.coordinates.forEach((elem) => {
       if (elem.occupied) {
         // fill("blue");
         // rect(elem.x, elem.y, 100, 100);
@@ -139,7 +136,7 @@ class Game {
   showPlayersHealth() {
     this.players.forEach((player, index) => {
       fill("blue");
-      textSize(20);
+      textSize();
       // rect(100, player.health, player.x, player.y);
       rect(
         player.x,
@@ -147,7 +144,7 @@ class Game {
         (square_side * player.health) / 100,
         square_side / 10
       );
-      text(`Player${index + 1}: `, player.x + 18, player.y - 10);
+      text(`Player ${index + 1}`, player.x, player.y - 10);
     });
   }
   checkDistance(obj, obj2) {
@@ -212,12 +209,27 @@ class Game {
         for (let zombie of this.zombies) {
           if (this.checkDistance(zombie, defensive) <= square_side) {
             defensive.health -= zombie.damage;
-            console.log(defensive.health);
             if (defensive.health <= 0) {
               this.removeFromArray(this.players, defensive);
               this.removeFromArray(this.turrets, defensive);
               /* this.uded();
+
+            
               noLoop(); */
+              if (!this.players.length) {
+                fill("black");
+                rect(0, 0, width, height);
+                fill("red");
+
+                textSize(20);
+                text(
+                  "GAME OVER PRESS SPACE TO RESTART",
+                  width / 4.5,
+                  height / 2
+                );
+                this.finished = true;
+                noLoop();
+              }
             }
           }
         }
@@ -319,9 +331,7 @@ class Game {
         player.health = 100;
       }
       if (this.bombs[0] && !this.checkCollision(this.bombs[0], player, 0)) {
-        console.log("bum");
         this.bombs.pop();
-        console.log("zombies length", this.zombies.length);
 
         for (let i = this.zombies.length - 1; i >= 0; i--) {
           let zombie = this.zombies[i];
@@ -343,27 +353,14 @@ class Game {
       ) {
         this.laserGuns.pop();
         player.laser = true;
-        setTimeout(function() {
+        setTimeout(function () {
           player.laser = false;
         }, 30000);
       }
     });
   }
-  draw() {
-    console.log("zombies:", this.zombies.length);
-    // this.fireBalls = [];
-    this.defensables = [...this.players, ...this.turrets];
-    frameRate(30);
 
-    this.coordinates.forEach(elem => {
-      if (!elem.occupied) {
-        image(this.earthImg, elem.x, elem.y, square_side, square_side);
-      }
-    });
-
-    //Create random zombies in especified places
-    this.randomZombies();
-    //manage zombies death and fireballs disappearance
+  shooting() {
     for (let fireBall of this.fireBalls) {
       fireBall.draw();
       for (let player of this.players) {
@@ -384,14 +381,36 @@ class Game {
         }
       }
     }
+  }
+  draw() {
+    if (game.finished) {
+    }
+    this.defensables = [...this.players, ...this.turrets];
+    frameRate(30);
+
+    this.coordinates.forEach((elem) => {
+      if (!elem.occupied) {
+        image(this.earthImg, elem.x, elem.y, square_side, square_side);
+      }
+    });
+
+    //Create random zombies in especified places
+    this.randomZombies();
+    //manage zombies death and fireballs disappearance
+    this.shooting();
+    //Random items creation
     this.randomHeart();
     this.randomBomb();
     this.randomTurret();
     this.randomLaserGun();
-    this.zombies.forEach(elem => {
+
+    //Drawing of zombies
+    this.zombies.forEach((elem) => {
       elem.draw();
     });
-    this.hearts.forEach(elem => {
+
+    //DRAWING OF THE ITEMS AND OTHER ELEMENTS
+    this.hearts.forEach((elem) => {
       image(
         this.heart,
         elem.x + square_side / 4,
@@ -400,23 +419,26 @@ class Game {
         square_side / 2
       );
     });
-    this.bombs.forEach(elem => {
+    this.bombs.forEach((elem) => {
       image(this.bomb, elem.x, elem.y, square_side, square_side);
     });
-    this.turretsItem.forEach(elem => {
+    this.turretsItem.forEach((elem) => {
       image(this.turretImgs.W, elem.x, elem.y, square_side, square_side);
     });
-    this.obstacles.forEach(elem => {
+    this.obstacles.forEach((elem) => {
       elem.draw();
     });
-    this.turrets.forEach(elem => {
+
+    this.turrets.forEach((elem) => {
       elem.draw();
     });
-    this.laserGuns.forEach(elem => {
+    this.laserGuns.forEach((elem) => {
       image(this.laserGun, elem.x, elem.y, square_side, square_side);
     });
+
     this.playersIteration();
     this.zombiesEating();
+
     this.showPlayersHealth();
     textSize(width / 40);
     fill("red");

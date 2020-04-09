@@ -106,17 +106,21 @@ function playerMovement(player, left, up, right, down, shoot, turret) {
   }
 }
 function keyPressed() {
-  if (gameStart) {
-    if (keyCode === 13) {
-      gamePaused = !gamePaused;
+  if (!game.finished) {
+    if (gameStart) {
+      if (keyCode === 13) {
+        gamePaused = !gamePaused;
+      }
+      if (!gamePaused) {
+        playerMovement(game.player1, 37, 38, 39, 40, 32, 66);
+        playerMovement(game.player2, 65, 87, 68, 83, 81, 69);
+        loop();
+      } else {
+        noLoop();
+      }
     }
-    if (!gamePaused) {
-      playerMovement(game.player1, 37, 38, 39, 40, 32, 66);
-      playerMovement(game.player2, 65, 87, 68, 83, 81, 69);
-      loop();
-    } else {
-      noLoop();
-    }
+  } else if (game.finished && keyCode == 32) {
+    window.location.reload();
   }
 
   //move Left
