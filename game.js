@@ -136,7 +136,7 @@ class Game {
   showPlayersHealth() {
     this.players.forEach((player, index) => {
       fill("blue");
-      textSize();
+      textSize(15);
       // rect(100, player.health, player.x, player.y);
       rect(
         player.x,
