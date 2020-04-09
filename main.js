@@ -119,7 +119,7 @@ function keyPressed() {
         noLoop();
       }
     }
-  } else if (game.finished && keyCode == 32) {
+  } else {
     window.location.reload();
   }
 

@@ -216,6 +216,8 @@ class Game {
 
             
               noLoop(); */
+
+              //ENDING THE GAME
               if (!this.players.length) {
                 fill("black");
                 rect(0, 0, width, height);
@@ -223,7 +225,7 @@ class Game {
 
                 textSize(20);
                 text(
-                  "GAME OVER PRESS SPACE TO RESTART",
+                  "GAME OVER PRESS ANY KEY TO RESTART",
                   width / 4.5,
                   height / 2
                 );
