@@ -23,8 +23,31 @@ function beforeStartGame() {
   fill("black");
   rect(0, 0, width, height);
   fill("red");
+
   textSize(height / 30);
   textFont(myFont);
+  text("Press 1 or 2 for number of players", width / 4, height / 4);
+  text("Player 1 Instructions", width / 10, height / 3);
+  push();
+  fill("#D1D1D1");
+  textSize(height / 34);
+
+  text("Move ==> arrow keys ", width / 10, height / 2.6);
+  text("Shooting ==> Space Bar ", width / 10, height / 2.2);
+  text("Turret ==> press B ", width / 10, height / 1.9);
+
+  pop();
+
+  text("Player 2 Instructions", width / 1.8, height / 3);
+  push();
+  fill("#D1D1D1");
+  textSize(height / 34);
+  text(`Move ==> "W-S-D-A" KEYS`, width / 1.8, height / 2.6);
+  text("Shooting ==> Press q ", width / 1.8, height / 2.2);
+  text("Turret ==> press E ", width / 1.8, height / 1.9);
+  pop();
+
+  text("Press 1 or 2 for number of players", width / 4, height / 4);
   text("Press 1 or 2 for number of players", width / 4, height / 4);
 
   image(title, width / 3.5, height - height * 1.1, width / 2, height / 2);
